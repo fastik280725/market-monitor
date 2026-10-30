@@ -24,6 +24,7 @@ CANDLE_LIMIT = 30
 COOLDOWN_SECONDS = 60 * 60
 REQUEST_TIMEOUT = 15
 REQUEST_PAUSE = 0.12
+TELEGRAM_MAX_LENGTH = 3500
 
 session = requests.Session()
 
@@ -33,7 +34,9 @@ session = requests.Session()
 def number(value, default=0.0):
     try:
         result = float(value)
-        return result if result == result and abs(result) != float("inf") else default
+        if result != result or abs(result) == float("inf"):
+            return default
+        return result
     except (TypeError, ValueError, OverflowError):
         return default
 
@@ -76,9 +79,9 @@ def format_price(price):
     if price >= 1000:
         return f"{price:,.2f}"
     if price >= 1:
-        return f"{price:.4f}"
+        return f"{price:.4f}".rstrip("0").rstrip(".")
     if price >= 0.01:
-        return f"{price:.5f}".rstrip("0").rstrip(".")
+        return f"{price:.6f}".rstrip("0").rstrip(".")
     return f"{price:.10f}".rstrip("0").rstrip(".")
 
 
@@ -106,8 +109,8 @@ def fetch_markets():
             continue
 
         price = number(item.get("lastPrice"))
-
         quote_volume = number(item.get("quoteVolume"))
+
         if quote_volume <= 0:
             base_volume = number(item.get("volume"))
             quote_volume = base_volume * price
@@ -122,12 +125,12 @@ def fetch_markets():
             "change_24h": number(item.get("priceChangePercent")),
         })
 
-    markets.sort(key=lambda x: x["volume"], reverse=True)
+    markets.sort(key=lambda item: item["volume"], reverse=True)
     return markets[:TOP_MARKETS]
 
 
 def parse_candle(row):
-    """Parse BingX candles in array or dictionary format."""
+    """Parse candle data returned as a dictionary or an array."""
 
     if isinstance(row, dict):
         timestamp = row.get(
@@ -146,7 +149,7 @@ def parse_candle(row):
 
         if quote_volume > 0:
             volume = quote_volume
-            volume_type = "USDT"
+            volume_type = "quote"
         else:
             volume = number(row.get("volume", row.get("vol", 0)))
             volume_type = "base"
@@ -158,18 +161,12 @@ def parse_candle(row):
         low = number(row[3])
         close = number(row[4])
 
-        if len(row) >= 8:
-            # Extended format: index 7 is quote volume.
-            quote_volume = number(row[7])
-
-            if quote_volume > 0:
-                volume = quote_volume
-                volume_type = "USDT"
-            else:
-                volume = number(row[5])
-                volume_type = "base"
+        # In the extended array format, field 7 is quote volume.
+        # In shorter formats, field 5 is base-asset volume.
+        if len(row) >= 8 and number(row[7]) > 0:
+            volume = number(row[7])
+            volume_type = "quote"
         else:
-            # Short format: index 5 is base-asset volume.
             volume = number(row[5])
             volume_type = "base"
 
@@ -223,10 +220,10 @@ def fetch_candles(symbol):
             continue
 
     # Remove duplicate timestamps.
-    unique = {c["time"]: c for c in candles}
-    candles = sorted(unique.values(), key=lambda c: c["time"])
+    unique = {candle["time"]: candle for candle in candles}
+    candles = sorted(unique.values(), key=lambda candle: candle["time"])
 
-    # Exclude the current, unfinished 15-minute candle.
+    # Remove the current unfinished candle when timestamps are in ms.
     now_ms = int(time.time() * 1000)
     candles = [
         candle for candle in candles
@@ -298,15 +295,18 @@ def analyze_market(market, candles):
 
     prior_candles = candles[-21:-1]
 
-    prior_high = max(c["high"] for c in prior_candles)
-    prior_low = min(c["low"] for c in prior_candles)
+    prior_high = max(candle["high"] for candle in prior_candles)
+    prior_low = min(candle["low"] for candle in prior_candles)
 
-    # Compare only candles using the same volume unit.
-    volume_types = {c["volume_type"] for c in candles[-21:]}
+    # Volume ratios are meaningful only when all compared
+    # candles use the same volume unit.
+    volume_types = {
+        candle["volume_type"] for candle in candles[-21:]
+    }
     volume_consistent = len(volume_types) == 1
 
     average_volume = (
-        sum(c["volume"] for c in prior_candles)
+        sum(candle["volume"] for candle in prior_candles)
         / len(prior_candles)
     )
 
@@ -419,6 +419,53 @@ def analyze_market(market, candles):
 
 # ==================== TELEGRAM ====================
 
+def split_telegram_message(message, max_length=TELEGRAM_MAX_LENGTH):
+    """Split a report into chunks without breaking signal blocks."""
+
+    paragraphs = message.split("\n\n")
+    chunks = []
+    current = ""
+
+    for paragraph in paragraphs:
+        if len(paragraph) > max_length:
+            if current:
+                chunks.append(current)
+                current = ""
+
+            for line in paragraph.split("\n"):
+                if len(line) > max_length:
+                    raise RuntimeError(
+                        "A single Telegram line exceeds the message limit."
+                    )
+
+                candidate = f"{current}\n{line}" if current else line
+
+                if len(candidate) > max_length:
+                    if current:
+                        chunks.append(current)
+                    current = line
+                else:
+                    current = candidate
+
+            continue
+
+        candidate = (
+            f"{current}\n\n{paragraph}" if current else paragraph
+        )
+
+        if len(candidate) > max_length:
+            if current:
+                chunks.append(current)
+            current = paragraph
+        else:
+            current = candidate
+
+    if current:
+        chunks.append(current)
+
+    return chunks
+
+
 def send_telegram(message):
     token = os.environ.get("TELEGRAM_BOT_TOKEN")
     chat_id = os.environ.get("TELEGRAM_CHAT_ID")
@@ -428,21 +475,34 @@ def send_telegram(message):
             "Missing TELEGRAM_BOT_TOKEN or TELEGRAM_CHAT_ID"
         )
 
-    response = session.post(
-        f"https://api.telegram.org/bot{token}/sendMessage",
-        json={
-            "chat_id": chat_id,
-            "text": message,
-            "disable_web_page_preview": True,
-        },
-        timeout=REQUEST_TIMEOUT,
-    )
+    chunks = split_telegram_message(message)
 
-    response.raise_for_status()
-    result = response.json()
+    for index, chunk in enumerate(chunks, start=1):
+        response = session.post(
+            f"https://api.telegram.org/bot{token}/sendMessage",
+            json={
+                "chat_id": chat_id,
+                "text": chunk,
+                "disable_web_page_preview": True,
+            },
+            timeout=REQUEST_TIMEOUT,
+        )
 
-    if not result.get("ok"):
-        raise RuntimeError(f"Telegram error: {result}")
+        try:
+            result = response.json()
+        except ValueError:
+            result = {"description": response.text}
+
+        if not response.ok or not result.get("ok"):
+            raise RuntimeError(
+                f"Telegram error on message {index}/{len(chunks)}: "
+                f"HTTP {response.status_code}; {result}"
+            )
+
+        print(
+            f"Telegram message {index}/{len(chunks)} sent "
+            f"({len(chunk)} characters)."
+        )
 
 
 def format_candidate(item, index):
@@ -491,15 +551,14 @@ def main():
     if not markets:
         raise RuntimeError("BingX returned no markets.")
 
-    rising = sum(1 for m in markets if m["change_24h"] > 0)
-    falling = sum(1 for m in markets if m["change_24h"] < 0)
+    rising = sum(1 for market in markets if market["change_24h"] > 0)
+    falling = sum(1 for market in markets if market["change_24h"] < 0)
 
     print(
         f"Scanning {len(markets)} markets. "
         f"24h green: {rising}, red: {falling}."
     )
 
-    # One diagnostic request to inspect the actual candle response.
     try:
         test_candles = fetch_candles(markets[0]["symbol"])
         print(
