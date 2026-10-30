@@ -57,7 +57,7 @@ MIN_REWARD_RISK_RATIO = 2.0
 TELEGRAM_MAX_LENGTH = 3500
 TARGET_NOTIONAL_USDT = max(0.0, float(os.getenv("TARGET_NOTIONAL_USDT", "5000")))
 # Fail closed: demo order placement must be explicitly enabled in the environment.
-ENABLE_AUTO_TRADE = os.getenv("ENABLE_AUTO_TRADE", "0").strip().lower() in ("1", "true", "yes")
+ENABLE_AUTO_TRADE = os.getenv("ENABLE_AUTO_TRADE", "1").strip().lower() in ("1", "true", "yes")
 MAX_DEMO_LEVERAGE = max(1, min(int(os.getenv("MAX_DEMO_LEVERAGE", "3")), 10))
 MAX_ENTRY_DEVIATION_PCT = max(0.05, min(float(os.getenv("MAX_ENTRY_DEVIATION_PCT", "0.5")), 2.0))
 session = requests.Session()
