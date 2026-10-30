@@ -16,7 +16,7 @@ concurrency:
 jobs:
   scan:
     runs-on: ubuntu-latest
-    timeout-minutes: 15
+    timeout-minutes: 360
 
     env:
       TELEGRAM_BOT_TOKEN: ${{ secrets.TELEGRAM_BOT_TOKEN }}
@@ -39,7 +39,13 @@ jobs:
         run: python scanner.py
 
       - name: Save market snapshot
+        if: always()
         run: |
+          if [ ! -f market_snapshot.json ]; then
+            echo "No snapshot file to save."
+            exit 0
+          fi
+
           if git diff --quiet -- market_snapshot.json; then
             echo "No snapshot changes."
             exit 0
