@@ -735,8 +735,13 @@ def signed_request(method, path, params=None):
         elif method == "DELETE":
             response = session.delete(f"{url}?{signed_query}", headers=headers, timeout=REQUEST_TIMEOUT)
         elif method == "POST":
-            # Do not blindly retry POST requests: response loss after acceptance could duplicate an order.
-            response = session.post(url, data=signed_query, headers=headers, timeout=REQUEST_TIMEOUT)
+            # BingX accepts signed params in query string for POST (matches CCXT / working clients).
+            # Putting them only in the body caused 109400 "field is required" on leverage/order.
+            response = session.post(
+                f"{url}?{signed_query}",
+                headers=headers,
+                timeout=REQUEST_TIMEOUT,
+            )
         else:
             raise ValueError(f"Unsupported signed method: {method}")
         try:
@@ -1091,7 +1096,7 @@ def render_report(analysis, selected, started, trade_record=None):
         f"⚠️ План основан на закрытых свечах; перед входом проверь актуальную цену."
         + ("\n\nDEMO ORDER PLACED (VST)\n"
            f"Qty: {trade_record.get('quantity')}\n"
-           f"Notional ~ {trade_record.get('notional_usdt')} USDT\n"
+           f"Notional \~ {trade_record.get('notional_usdt')} USDT\n"
            f"Leverage: x{trade_record.get('leverage')}\n"
            f"Order ID: {trade_record.get('id')}" if trade_record else "")
     )
@@ -1223,13 +1228,17 @@ def main():
         metrics = {c["symbol"]: fetch_optional_metrics(c["symbol"]) for c in selected}
         waiting_id = None
         try:
-            waiting_id = send_telegram("Waiting for Gemini... Attempt 1")[0]
+            waiting_id = send_telegram("⏳ Жду ответ от Gemini... Попытка 1")[0]
         except Exception as exc:
             print(f"Could not send waiting message: {exc}")
 
         def update_attempt(attempt):
             if waiting_id is not None and attempt > 1:
-                telegram_message_action("editMessageText", waiting_id, f"Waiting for Gemini... Attempt {attempt}")
+                telegram_message_action(
+                    "editMessageText",
+                    waiting_id,
+                    f"⏳ Жду ответ от Gemini... Попытка {attempt}",
+                )
 
         try:
             analysis = gemini_analyze_many(selected, metrics, on_attempt=update_attempt)
