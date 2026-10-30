@@ -18,7 +18,7 @@ OPEN_INTEREST_URL = f"{BASE_URL}/openApi/swap/v2/quote/openInterest"
 GEMINI_BASE_URL = "https://generativelanguage.googleapis.com/v1beta/models"
 
 # Можно изменить после проверки доступных моделей в Google AI Studio.
-GEMINI_MODEL = os.environ.get("GEMINI_MODEL", "gemini-2.5-flash")
+GEMINI_MODEL = os.environ.get("GEMINI_MODEL", "gemini-3.8-flash")
 
 SNAPSHOT_FILE = Path("market_snapshot.json")
 
