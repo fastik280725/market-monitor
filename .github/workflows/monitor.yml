@@ -21,7 +21,7 @@ jobs:
       GEMINI_API_KEY: ${{ secrets.GEMINI_API_KEY }}
       BINGX_API_KEY: ${{ secrets.BINGX_API_KEY }}
       BINGX_SECRET_KEY: ${{ secrets.BINGX_SECRET_KEY }}
-      ENABLE_AUTO_TRADE: "0"
+      ENABLE_AUTO_TRADE: "1"
 
     steps:
       - name: Checkout repository
