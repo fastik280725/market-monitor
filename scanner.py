@@ -17,6 +17,8 @@ SNAPSHOT_FILE = Path("market_snapshot.json")
 
 TOP_MARKETS = 100
 MAX_SIGNALS = 15
+DETAILED_SIGNALS = 5
+
 INTERVAL = "15m"
 INTERVAL_MS = 15 * 60 * 1000
 CANDLE_LIMIT = 30
@@ -130,8 +132,6 @@ def fetch_markets():
 
 
 def parse_candle(row):
-    """Parse candle data returned as a dictionary or an array."""
-
     if isinstance(row, dict):
         timestamp = row.get(
             "time",
@@ -161,8 +161,6 @@ def parse_candle(row):
         low = number(row[3])
         close = number(row[4])
 
-        # In the extended array format, field 7 is quote volume.
-        # In shorter formats, field 5 is base-asset volume.
         if len(row) >= 8 and number(row[7]) > 0:
             volume = number(row[7])
             volume_type = "quote"
@@ -219,11 +217,10 @@ def fetch_candles(symbol):
         except (IndexError, TypeError, ValueError, OverflowError):
             continue
 
-    # Remove duplicate timestamps.
     unique = {candle["time"]: candle for candle in candles}
     candles = sorted(unique.values(), key=lambda candle: candle["time"])
 
-    # Remove the current unfinished candle when timestamps are in ms.
+    # Исключаем текущую незакрытую 15-минутную свечу.
     now_ms = int(time.time() * 1000)
     candles = [
         candle for candle in candles
@@ -295,18 +292,16 @@ def analyze_market(market, candles):
 
     prior_candles = candles[-21:-1]
 
-    prior_high = max(candle["high"] for candle in prior_candles)
-    prior_low = min(candle["low"] for candle in prior_candles)
+    prior_high = max(c["high"] for c in prior_candles)
+    prior_low = min(c["low"] for c in prior_candles)
 
-    # Volume ratios are meaningful only when all compared
-    # candles use the same volume unit.
     volume_types = {
         candle["volume_type"] for candle in candles[-21:]
     }
     volume_consistent = len(volume_types) == 1
 
     average_volume = (
-        sum(candle["volume"] for candle in prior_candles)
+        sum(c["volume"] for c in prior_candles)
         / len(prior_candles)
     )
 
@@ -420,8 +415,6 @@ def analyze_market(market, candles):
 # ==================== TELEGRAM ====================
 
 def split_telegram_message(message, max_length=TELEGRAM_MAX_LENGTH):
-    """Split a report into chunks without breaking signal blocks."""
-
     paragraphs = message.split("\n\n")
     chunks = []
     current = ""
@@ -505,36 +498,43 @@ def send_telegram(message):
         )
 
 
-def format_candidate(item, index):
+def format_detailed_candidate(item, index):
     is_long = item["direction"] == "LONG"
-    is_strong = item["strength"] == "СИЛЬНЫЙ"
-
     direction_icon = "🟢" if is_long else "🔴"
-    strength_icon = "🔥" if is_strong else "👀"
+    strength_icon = "🔥" if item["strength"] == "СИЛЬНЫЙ" else "👀"
     movement_icon = "📈" if item["change_15m"] > 0 else "📉"
 
     if item["volume_valid"]:
         volume_line = (
-            f"┃ 🔊 Объём: {item['volume_ratio']:.2f}x от среднего"
+            f"🔊 Объём: {item['volume_ratio']:.2f}x от среднего"
         )
     else:
-        volume_line = "┃ ⚠️ Объём: нет достоверных данных"
+        volume_line = "⚠️ Объём: нет достоверных данных"
 
     return (
-        f"┏━━━━━━━━━━━━━━━━━━\n"
-        f"┃ {strength_icon} СИГНАЛ #{index}\n"
-        f"┃ {direction_icon} {item['symbol']}\n"
-        f"┃ {'🟩 LONG' if is_long else '🟥 SHORT'}\n"
-        f"┣━━━━━━━━━━━━━━━━━━\n"
-        f"┃ 🎯 Тип: {item['title']}\n"
-        f"┃ 💵 Цена: {format_price(item['price'])} USDT\n"
-        f"┃ {movement_icon} 15 минут: "
-        f"{item['change_15m']:+.2f}%\n"
-        f"┃ 🕐 1 час: {item['change_1h']:+.2f}%\n"
-        f"┃ 📊 24 часа: {item['change_24h']:+.2f}%\n"
-        f"{volume_line}\n"
-        f"┃ ⭐ Рейтинг: {item['score']:.1f}\n"
-        f"┗━━━━━━━━━━━━━━━━━━"
+        f"{strength_icon} #{index} {item['symbol']} "
+        f"{direction_icon} {item['direction']}\n"
+        f"🎯 {item['title']}\n"
+        f"💵 Цена: {format_price(item['price'])} USDT\n"
+        f"{movement_icon} 15м: {item['change_15m']:+.2f}%"
+        f" | 1ч: {item['change_1h']:+.2f}%\n"
+        f"📊 24ч: {item['change_24h']:+.2f}%\n"
+        f"{volume_line} | ⭐ Рейтинг: {item['score']:.1f}"
+    )
+
+
+def format_potential_candidate(item):
+    icon = "🟢" if item["direction"] == "LONG" else "🔴"
+    volume = (
+        f" | объём {item['volume_ratio']:.1f}x"
+        if item["volume_valid"] else ""
+    )
+
+    return (
+        f"• {icon} {item['symbol']} "
+        f"{item['change_15m']:+.2f}% / "
+        f"{item['change_1h']:+.2f}%"
+        f"{volume}"
     )
 
 
@@ -551,8 +551,8 @@ def main():
     if not markets:
         raise RuntimeError("BingX returned no markets.")
 
-    rising = sum(1 for market in markets if market["change_24h"] > 0)
-    falling = sum(1 for market in markets if market["change_24h"] < 0)
+    rising = sum(1 for m in markets if m["change_24h"] > 0)
+    falling = sum(1 for m in markets if m["change_24h"] < 0)
 
     print(
         f"Scanning {len(markets)} markets. "
@@ -606,44 +606,53 @@ def main():
     )
 
     selected = candidates[:MAX_SIGNALS]
+    detailed = selected[:min(DETAILED_SIGNALS, len(selected))]
+    potential = selected[len(detailed):]
 
     print("Qualifying candidates:", len(candidates))
+    print(
+        f"Detailed signals: {len(detailed)}; "
+        f"potential candidates: {len(potential)}"
+    )
 
     if selected:
         strong_count = sum(
-            1 for item in selected
+            1 for item in detailed
             if item["strength"] == "СИЛЬНЫЙ"
         )
-        watch_count = len(selected) - strong_count
 
         lines = [
             "📡 BINGX | РЫНОЧНЫЙ РАДАР",
-            "━━━━━━━━━━━━━━━━━━━━",
-            f"🕒 Время: {now}",
+            "━━━━━━━━━━━━━━━━━━",
+            f"🕒 {now}",
             f"🔎 Проверено рынков: {len(markets)}",
-            f"🟢 Рост за 24ч: {rising}",
-            f"🔴 Падение за 24ч: {falling}",
+            f"🟢 Рост: {rising} | 🔴 Падение: {falling}",
             "",
-            "🎯 РЕЗУЛЬТАТ СКАНИРОВАНИЯ",
-            f"🔥 Сильных сигналов: {strong_count}",
-            f"👀 Для наблюдения: {watch_count}",
-            "",
-            "📋 СПИСОК КАНДИДАТОВ",
+            f"🎯 ОСНОВНЫЕ СИГНАЛЫ: {len(detailed)}",
+            f"🔥 Сильных среди них: {strong_count}",
             "",
         ]
 
-        for index, item in enumerate(selected, start=1):
-            lines.append(format_candidate(item, index))
+        for index, item in enumerate(detailed, start=1):
+            lines.append(format_detailed_candidate(item, index))
+            lines.append("")
+
+        if potential:
+            lines.extend([
+                "━━━━━━━━━━━━━━━━━━",
+                f"👀 ПОТЕНЦИАЛЬНО ИНТЕРЕСНЫЕ: {len(potential)}",
+                "Монета | изменение 15м / 1ч | объём",
+            ])
+
+            for item in potential:
+                lines.append(format_potential_candidate(item))
+
             lines.append("")
 
         lines.extend([
-            "━━━━━━━━━━━━━━━━━━━━",
-            "📖 КАК ЧИТАТЬ СИГНАЛЫ",
-            "🔥 СИЛЬНЫЙ — больше подтверждений движения.",
-            "👀 НАБЛЮДЕНИЕ — нужна дополнительная проверка.",
-            "",
-            "⚠️ Сигналы не гарантируют прибыль.",
-            "🛑 Проверь график и риск перед любым решением.",
+            "━━━━━━━━━━━━━━━━━━",
+            "⚠️ Сигналы требуют проверки на графике.",
+            "🛑 Это не гарантированная точка входа.",
         ])
 
         send_telegram("\n".join(lines).strip())
@@ -651,7 +660,10 @@ def main():
         for item in selected:
             sent_signals[item["key"]] = current_time
 
-        print(f"Telegram report sent: {len(selected)} candidates.")
+        print(
+            f"Telegram report sent: {len(detailed)} detailed, "
+            f"{len(potential)} potential."
+        )
     else:
         print("No interesting new candidates. Telegram message not sent.")
 
