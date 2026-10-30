@@ -1,0 +1,25 @@
+
+name: Deploy Telegram Worker
+
+on:
+  push:
+    branches:
+      - main
+    paths:
+      - worker.js
+      - .github/workflows/deploy-worker.yml
+  workflow_dispatch:
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Deploy to Cloudflare
+        uses: cloudflare/wrangler-action@v3
+        with:
+          apiToken: ${{ secrets.CLOUDFLARE_API_TOKEN }}
+          accountId: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
+          command: deploy worker.js --name market-monitor-bot --compatibility-date 2026-10-30
