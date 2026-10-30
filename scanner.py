@@ -3,11 +3,13 @@ import json
 import os
 import urllib.request
 from datetime import datetime, timezone
+from decimal import Decimal
 
 BINGX_URL = (
     "https://open-api.bingx.com"
     "/openApi/swap/v2/quote/ticker"
 )
+
 TELEGRAM_TOKEN = os.environ["TELEGRAM_BOT_TOKEN"]
 CHAT_ID = os.environ["TELEGRAM_CHAT_ID"]
 
@@ -30,13 +32,32 @@ def get_market_data():
     if isinstance(data, dict):
         data = [data]
 
-    # Только USDT-бессрочные контракты.
-    markets = [
-        item for item in data
-        if item.get("symbol", "").endswith("-USDT")
-    ]
+    markets = []
 
-    # Сортировка по суточному обороту в USDT.
+    # Берём USDT-контракты и исключаем очевидные
+    # валютные пары, акции, индексы и товары.
+    excluded = (
+        "NC", "NCCO", "NCFX", "NCSK",
+    )
+
+    for item in data:
+        symbol = item.get("symbol", "")
+
+        if not symbol.endswith("-USDT"):
+            continue
+
+        base = symbol[:-5]
+
+        if base.startswith(excluded):
+            continue
+
+        # Только символы, состоящие из букв и цифр.
+        if not base.isalnum():
+            continue
+
+        item["base"] = base
+        markets.append(item)
+
     markets.sort(
         key=lambda item: float(item.get("quoteVolume") or 0),
         reverse=True,
@@ -45,21 +66,41 @@ def get_market_data():
     return markets[:100]
 
 
-def fmt_number(value):
-    value = float(value or 0)
-    if value >= 1_000_000_000:
-        return f"{value / 1_000_000_000:.2f}B"
-    if value >= 1_000_000:
-        return f"{value / 1_000_000:.2f}M"
-    if value >= 1_000:
-        return f"{value / 1_000:.2f}K"
-    return f"{value:.2f}"
+def fmt_price(value):
+    number = Decimal(str(value or "0"))
+
+    if number == 0:
+        return "0"
+
+    if abs(number) >= 1000:
+        return f"{number:,.2f}"
+
+    if abs(number) >= 1:
+        return f"{number:.4f}".rstrip("0").rstrip(".")
+
+    # Для дешёвых активов сохраняем значащие цифры.
+    return f"{number:.8f}".rstrip("0").rstrip(".")
+
+
+def fmt_volume(value):
+    number = float(value or 0)
+
+    if number >= 1_000_000_000:
+        return f"{number / 1_000_000_000:.2f}B"
+    if number >= 1_000_000:
+        return f"{number / 1_000_000:.2f}M"
+    if number >= 1_000:
+        return f"{number / 1_000:.2f}K"
+
+    return f"{number:.2f}"
 
 
 def send_telegram(text):
     url = (
-        f"https://api.telegram.org/bot{TELEGRAM_TOKEN}/sendMessage"
+        f"https://api.telegram.org/bot"
+        f"{TELEGRAM_TOKEN}/sendMessage"
     )
+
     payload = json.dumps({
         "chat_id": CHAT_ID,
         "text": text,
@@ -83,27 +124,74 @@ def send_telegram(text):
 def main():
     markets = get_market_data()
 
-    now = datetime.now(timezone.utc).strftime("%d.%m.%Y %H:%M UTC")
+    if not markets:
+        raise RuntimeError("No markets returned by the filter")
+
+    now = datetime.now(timezone.utc).strftime(
+        "%d.%m.%Y %H:%M UTC"
+    )
+
+    changes = [
+        (market, float(market.get("priceChangePercent") or 0))
+        for market in markets
+    ]
+
+    rising = sum(1 for _, change in changes if change > 0)
+    falling = sum(1 for _, change in changes if change < 0)
+    unchanged = len(changes) - rising - falling
+
+    leaders_up = sorted(
+        changes, key=lambda item: item[1], reverse=True
+    )[:5]
+
+    leaders_down = sorted(
+        changes, key=lambda item: item[1]
+    )[:5]
+
     lines = [
-        f"📊 BingX Futures — TOP 100",
+        "📊 BingX Futures — TOP 100 CRYPTO",
         f"Обновлено: {now}",
         "Сортировка: оборот за 24 часа",
         "",
+        "📈 Сводка рынка:",
+        f"Растут: {rising} | Падают: {falling} | "
+        f"Без изменений: {unchanged}",
+        "",
+        "🚀 Топ-5 роста за 24ч:",
     ]
+
+    for market, change in leaders_up:
+        lines.append(
+            f"{market['symbol']}: {change:+.2f}%"
+        )
+
+    lines.extend(["", "🔻 Топ-5 падения за 24ч:"])
+
+    for market, change in leaders_down:
+        lines.append(
+            f"{market['symbol']}: {change:+.2f}%"
+        )
+
+    lines.extend([
+        "",
+        "📋 Рынки по обороту:",
+        "",
+    ])
 
     for rank, market in enumerate(markets, start=1):
         symbol = market.get("symbol", "?")
-        price = fmt_number(market.get("lastPrice"))
-        change = float(market.get("priceChangePercent") or 0)
-        volume = fmt_number(market.get("quoteVolume"))
+        price = fmt_price(market.get("lastPrice"))
+        change = float(
+            market.get("priceChangePercent") or 0
+        )
+        volume = fmt_volume(market.get("quoteVolume"))
 
         lines.append(
             f"{rank}. {symbol} | Цена: {price} | "
             f"24ч: {change:+.2f}% | Оборот: ${volume}"
         )
 
-    # Telegram ограничивает длину одного сообщения.
-    # Разбиваем отчёт на несколько сообщений.
+    # Делим отчёт на части, чтобы уложиться в лимит Telegram.
     chunks = []
     current = ""
 
@@ -111,6 +199,7 @@ def main():
         if len(current) + len(line) + 1 > 3500:
             chunks.append(current)
             current = ""
+
         current += line + "\n"
 
     if current:
@@ -119,13 +208,15 @@ def main():
     for chunk in chunks:
         send_telegram(chunk)
 
-    print(f"Report sent: {len(markets)} markets")
+    print(
+        f"Report sent: {len(markets)} markets; "
+        f"rising={rising}, falling={falling}"
+    )
 
 
 if __name__ == "__main__":
     try:
         main()
     except Exception as error:
-        # Ошибка попадёт в журнал GitHub Actions.
         print(f"Scanner failed: {error}")
         raise
