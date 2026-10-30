@@ -1,9 +1,48 @@
+
 export default {
   async fetch(request, env) {
     const url = new URL(request.url);
 
     if (request.method === "GET" && url.pathname === "/") {
       return new Response("Market Monitor Bot is running.");
+    }
+
+    // One-time Telegram webhook setup
+    if (request.method === "GET" && url.pathname === "/setup") {
+      if (
+        !env.SETUP_KEY ||
+        url.searchParams.get("key") !== env.SETUP_KEY
+      ) {
+        return new Response("Forbidden", { status: 403 });
+      }
+
+      if (
+        !env.TELEGRAM_BOT_TOKEN ||
+        !env.TELEGRAM_WEBHOOK_SECRET
+      ) {
+        return new Response("Missing Telegram settings", {
+          status: 500
+        });
+      }
+
+      const result = await fetch(
+        `https://api.telegram.org/bot${env.TELEGRAM_BOT_TOKEN}/setWebhook`,
+        {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({
+            url: `${url.origin}/telegram`,
+            secret_token: env.TELEGRAM_WEBHOOK_SECRET,
+            allowed_updates: ["message"]
+          })
+        }
+      );
+
+      const data = await result.json();
+
+      return Response.json(data, {
+        status: result.ok ? 200 : 502
+      });
     }
 
     if (request.method !== "POST" || url.pathname !== "/telegram") {
@@ -26,6 +65,7 @@ export default {
     }
 
     const message = update.message;
+
     if (!message?.text || !message.chat) {
       return new Response("OK");
     }
@@ -47,7 +87,7 @@ export default {
     }
 
     async function reply(text) {
-      await fetch(
+      const response = await fetch(
         `https://api.telegram.org/bot${env.TELEGRAM_BOT_TOKEN}/sendMessage`,
         {
           method: "POST",
@@ -55,6 +95,10 @@ export default {
           body: JSON.stringify({ chat_id: chatId, text })
         }
       );
+
+      if (!response.ok) {
+        console.error("Telegram reply failed:", response.status);
+      }
     }
 
     const parts = String(env.GITHUB_REPOSITORY || "").split("/");
@@ -66,9 +110,10 @@ export default {
       !owner ||
       !repo ||
       !env.GITHUB_TOKEN ||
-      !env.GITHUB_REF
+      !env.GITHUB_REF ||
+      !env.TELEGRAM_BOT_TOKEN
     ) {
-      await reply("Ошибка настройки GitHub. Проверь параметры Worker.");
+      await reply("Ошибка настройки: проверь переменные Worker.");
       return new Response("OK");
     }
 
@@ -95,6 +140,7 @@ export default {
           response.status,
           (await response.text()).slice(0, 500)
         );
+
         await reply(
           `Не удалось запустить сканер (HTTP ${response.status}). Проверь GitHub Token и workflow.`
         );
