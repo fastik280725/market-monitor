@@ -2,61 +2,69 @@
 import json
 import os
 import time
-import urllib.request
 from datetime import datetime, timezone
-from decimal import Decimal
 from pathlib import Path
-from urllib.parse import urlencode
 
-TICKER_URL = (
-    "https://open-api.bingx.com/openApi/swap/v2/quote/ticker"
-)
-KLINE_URL = (
-    "https://open-api.bingx.com/openApi/swap/v3/quote/klines"
-)
+import requests
+
+# ==================== SETTINGS ====================
+
+BASE_URL = "https://open-api.bingx.com"
+TICKER_URL = f"{BASE_URL}/openApi/swap/v2/quote/ticker"
+KLINES_URL = f"{BASE_URL}/openApi/swap/v3/quote/klines"
 
 SNAPSHOT_FILE = Path("market_snapshot.json")
 
-TELEGRAM_TOKEN = os.environ["TELEGRAM_BOT_TOKEN"]
-CHAT_ID = os.environ["TELEGRAM_CHAT_ID"]
+TOP_MARKETS = 100
+MAX_SIGNALS = 15
+CANDLE_INTERVAL = "15m"
+CANDLE_LIMIT = 30
 
-# Начальные фильтры для тестирования, не торговые рекомендации.
-IMPULSE_15M = 1.5
-IMPULSE_1H = 1.0
-BREAKOUT_VOLUME_RATIO = 1.3
-REVERSAL_1H = 3.5
-REVERSAL_15M = 1.0
-VOLUME_CONFIRM_RATIO = 1.2
+COOLDOWN_SECONDS = 60 * 60
+REQUEST_TIMEOUT = 15
+REQUEST_PAUSE = 0.12
 
-COOLDOWN_MS = 60 * 60 * 1000
-REQUEST_PAUSE = 0.15
+session = requests.Session()
 
 
-def request_json(url, retries=2):
+# ==================== API ====================
+
+def request_json(url, params=None):
     last_error = None
 
-    for attempt in range(retries + 1):
+    for attempt in range(3):
         try:
-            request = urllib.request.Request(
+            response = session.get(
                 url,
-                headers={"User-Agent": "MarketMonitor/1.0"},
+                params=params,
+                timeout=REQUEST_TIMEOUT,
             )
-            with urllib.request.urlopen(request, timeout=20) as response:
-                result = json.loads(response.read().decode("utf-8"))
+            response.raise_for_status()
+            result = response.json()
 
-            if result.get("code") != 0:
-                raise RuntimeError(
-                    f"API error: {result.get('msg', 'unknown error')}"
-                )
+            if isinstance(result, dict):
+                code = result.get("code", 0)
+                if code not in (0, "0", None):
+                    raise RuntimeError(
+                        f"BingX API error: {code} "
+                        f"{result.get('msg', '')}"
+                    )
 
             return result
 
-        except Exception as exc:
+        except (requests.RequestException, ValueError, RuntimeError) as exc:
             last_error = exc
-            if attempt < retries:
-                time.sleep(1.5 * (attempt + 1))
+            if attempt < 2:
+                time.sleep(1 + attempt)
 
-    raise RuntimeError(str(last_error))
+    raise RuntimeError(f"Request failed: {last_error}")
+
+
+def as_float(value, default=0.0):
+    try:
+        return float(value)
+    except (TypeError, ValueError):
+        return default
 
 
 def fetch_markets():
@@ -69,21 +77,33 @@ def fetch_markets():
     markets = []
 
     for item in data:
-        symbol = item.get("symbol", "")
+        if not isinstance(item, dict):
+            continue
+
+        symbol = str(item.get("symbol", ""))
 
         if not symbol.endswith("-USDT"):
             continue
 
-        base = symbol[:-5]
-        if not base.isalnum() or base.startswith("NC"):
+        base = symbol.split("-")[0]
+        if base.startswith("NC"):
             continue
 
-        try:
-            price = float(item.get("lastPrice") or 0)
-            change = float(item.get("priceChangePercent") or 0)
-            volume = float(item.get("quoteVolume") or 0)
-        except (TypeError, ValueError):
-            continue
+        price = as_float(item.get("lastPrice"))
+        volume = as_float(
+            item.get("quoteVolume", item.get("volume", 0))
+        )
+
+        change = as_float(
+            item.get(
+                "priceChangePercent",
+                item.get("priceChange", 0),
+            )
+        )
+
+        # Some API responses express this value as a fraction.
+        if abs(change) <= 1 and change != 0:
+            change *= 100
 
         if price <= 0:
             continue
@@ -91,462 +111,352 @@ def fetch_markets():
         markets.append({
             "symbol": symbol,
             "price": price,
-            "change": change,
             "volume": volume,
+            "change_24h": change,
         })
 
-    markets.sort(key=lambda item: item["volume"], reverse=True)
-    return markets[:100]
+    markets.sort(key=lambda x: x["volume"], reverse=True)
+    return markets[:TOP_MARKETS]
 
 
 def fetch_klines(symbol):
-    params = urlencode({
-        "symbol": symbol,
-        "interval": "15m",
-        "limit": 30,
-    })
+    result = request_json(
+        KLINES_URL,
+        params={
+            "symbol": symbol,
+            "interval": CANDLE_INTERVAL,
+            "limit": CANDLE_LIMIT,
+        },
+    )
 
-    result = request_json(f"{KLINE_URL}?{params}")
-    now_ms = int(time.time() * 1000)
+    rows = result.get("data", [])
+
+    if not isinstance(rows, list):
+        return []
+
     candles = []
 
-    for row in result.get("data", []):
+    for row in rows:
         try:
-            if len(row) < 8:
-                continue
+            if isinstance(row, dict):
+                candle = {
+                    "time": int(row.get("time", row.get("timestamp", 0))),
+                    "open": as_float(row.get("open")),
+                    "high": as_float(row.get("high")),
+                    "low": as_float(row.get("low")),
+                    "close": as_float(row.get("close")),
+                    "quote_volume": as_float(row.get("quoteVolume")),
+                }
+            else:
+                candle = {
+                    "time": int(float(row[0])),
+                    "open": as_float(row[1]),
+                    "high": as_float(row[2]),
+                    "low": as_float(row[3]),
+                    "close": as_float(row[4]),
+                    "quote_volume": as_float(row[7]),
+                }
 
-            candle = {
-                "time": int(row[0]),
-                "open": float(row[1]),
-                "high": float(row[2]),
-                "low": float(row[3]),
-                "close": float(row[4]),
-                "close_time": int(row[6]),
-                "quote_volume": float(row[7]),
-            }
-
-            if (
-                candle["close_time"] < now_ms
-                and candle["close"] > 0
-            ):
+            if candle["close"] > 0:
                 candles.append(candle)
 
-        except (TypeError, ValueError, IndexError):
+        except (IndexError, TypeError, ValueError):
             continue
 
-    candles.sort(key=lambda candle: candle["time"])
+    candles.sort(key=lambda x: x["time"])
+
+    # Exclude the currently forming candle where possible.
+    now_ms = int(time.time() * 1000)
+    candles = [
+        c for c in candles
+        if c["time"] == 0 or c["time"] + 15 * 60 * 1000 <= now_ms
+    ]
+
     return candles
 
 
+# ==================== SNAPSHOT ====================
+
 def load_snapshot():
     try:
-        data = json.loads(
-            SNAPSHOT_FILE.read_text(encoding="utf-8")
-        )
-    except (FileNotFoundError, json.JSONDecodeError):
+        data = json.loads(SNAPSHOT_FILE.read_text(encoding="utf-8"))
+    except (FileNotFoundError, json.JSONDecodeError, OSError):
         return {"markets": {}, "sent_signals": {}}
 
-    # Совместимость со старым форматом snapshot.
-    if "markets" in data and isinstance(data["markets"], dict):
+    if not isinstance(data, dict):
+        return {"markets": {}, "sent_signals": {}}
+
+    if isinstance(data.get("markets"), dict):
         return {
             "markets": data["markets"],
             "sent_signals": data.get("sent_signals", {}),
         }
 
+    # Compatibility with the older snapshot format.
     return {"markets": data, "sent_signals": {}}
 
 
 def save_snapshot(markets, sent_signals):
-    snapshot = {
-        "markets": {
-            market["symbol"]: {
-                "price": market["price"],
-                "volume": market["volume"],
-            }
-            for market in markets
-        },
+    payload = {
+        "updated_at": datetime.now(timezone.utc).isoformat(),
+        "markets": markets,
         "sent_signals": sent_signals,
     }
 
     SNAPSHOT_FILE.write_text(
-        json.dumps(snapshot, ensure_ascii=False, indent=2),
+        json.dumps(payload, ensure_ascii=False, indent=2),
         encoding="utf-8",
     )
 
 
-def fmt_price(value):
-    number = Decimal(str(value))
-
-    if abs(number) >= 1000:
-        return f"{number:,.2f}"
-
-    if abs(number) >= 1:
-        return f"{number:.4f}".rstrip("0").rstrip(".")
-
-    return f"{number:.10f}".rstrip("0").rstrip(".")
-
-
-def fmt_volume(value):
-    if value >= 1_000_000_000:
-        return f"{value / 1_000_000_000:.2f}B"
-    if value >= 1_000_000:
-        return f"{value / 1_000_000:.2f}M"
-    if value >= 1_000:
-        return f"{value / 1_000:.2f}K"
-
-    return f"{value:.2f}"
-
-
-def send_telegram(message):
-    url = (
-        f"https://api.telegram.org/bot"
-        f"{TELEGRAM_TOKEN}/sendMessage"
-    )
-
-    payload = json.dumps({
-        "chat_id": CHAT_ID,
-        "text": message,
-        "disable_web_page_preview": True,
-    }).encode("utf-8")
-
-    request = urllib.request.Request(
-        url,
-        data=payload,
-        headers={"Content-Type": "application/json"},
-        method="POST",
-    )
-
-    with urllib.request.urlopen(request, timeout=20) as response:
-        result = json.loads(response.read().decode("utf-8"))
-
-    if not result.get("ok"):
-        raise RuntimeError("Telegram did not accept the message")
-
-
-def send_chunks(lines, limit=3500):
-    chunks = []
-    current = ""
-
-    for line in lines:
-        addition = line + "\n"
-
-        if len(current) + len(addition) > limit:
-            if current:
-                chunks.append(current)
-            current = ""
-
-        current += addition
-
-    if current:
-        chunks.append(current)
-
-    for chunk in chunks:
-        send_telegram(chunk)
-
+# ==================== SIGNAL DETECTION ====================
 
 def detect_signal(symbol, candles):
-    # Для анализа нужны последняя закрытая свеча и
-    # минимум 20 предыдущих свечей.
     if len(candles) < 22:
         return None
 
     last = candles[-1]
     previous = candles[-2]
-    hour_ago = candles[-5]
+    one_hour_ago = candles[-5]
 
-    if min(previous["close"], hour_ago["close"]) <= 0:
+    close = last["close"]
+    previous_close = previous["close"]
+    hour_close = one_hour_ago["close"]
+
+    if min(close, previous_close, hour_close) <= 0:
         return None
 
-    change_15m = (
-        last["close"] / previous["close"] - 1
-    ) * 100
+    change_15m = (close / previous_close - 1) * 100
+    change_1h = (close / hour_close - 1) * 100
 
-    change_1h = (
-        last["close"] / hour_ago["close"] - 1
-    ) * 100
+    previous_candles = candles[-21:-1]
+    prior_high = max(c["high"] for c in previous_candles)
+    prior_low = min(c["low"] for c in previous_candles)
 
-    prior_20 = candles[-21:-1]
-    prior_high = max(candle["high"] for candle in prior_20)
-    prior_low = min(candle["low"] for candle in prior_20)
+    avg_volume = sum(
+        c["quote_volume"] for c in previous_candles
+    ) / len(previous_candles)
 
-    average_volume = sum(
-        candle["quote_volume"] for candle in prior_20
-    ) / len(prior_20)
+    current_volume = last["quote_volume"]
 
-    volume_ratio = (
-        last["quote_volume"] / average_volume
-        if average_volume > 0
-        else 0
+    if avg_volume > 0:
+        volume_ratio = current_volume / avg_volume
+    else:
+        volume_ratio = 0
+
+    signal_type = None
+    direction = None
+    description = None
+    bonus = 0
+
+    # Breakout above/below the previous 20 candles.
+    if close > prior_high and volume_ratio >= 1.3:
+        signal_type = "ПРОБОЙ ВВЕРХ"
+        direction = "LONG"
+        description = "Цена выше максимума предыдущих свечей"
+        bonus = 4
+
+    elif close < prior_low and volume_ratio >= 1.3:
+        signal_type = "ПРОБОЙ ВНИЗ"
+        direction = "SHORT"
+        description = "Цена ниже минимума предыдущих свечей"
+        bonus = 4
+
+    # Strong short-term impulse.
+    elif change_15m >= 1.5 and change_1h >= 1.0 and volume_ratio >= 1.2:
+        signal_type = "ИМПУЛЬС ВВЕРХ"
+        direction = "LONG"
+        description = "Сильное движение с повышенным объёмом"
+        bonus = 2
+
+    elif change_15m <= -1.5 and change_1h <= -1.0 and volume_ratio >= 1.2:
+        signal_type = "ИМПУЛЬС ВНИЗ"
+        direction = "SHORT"
+        description = "Сильное движение с повышенным объёмом"
+        bonus = 2
+
+    # Possible reversal after a sizeable move.
+    elif change_1h <= -3.5 and change_15m >= 1.0 and volume_ratio >= 1.2:
+        signal_type = "ВОЗМОЖНЫЙ ОТСКОК"
+        direction = "LONG"
+        description = "Рост после сильного падения"
+        bonus = 1
+
+    elif change_1h >= 3.5 and change_15m <= -1.0 and volume_ratio >= 1.2:
+        signal_type = "ВОЗМОЖНЫЙ ОТКАТ"
+        direction = "SHORT"
+        description = "Снижение после сильного роста"
+        bonus = 1
+
+    if signal_type is None:
+        return None
+
+    # Heuristic ranking: stronger movement, volume and breakout
+    # receive higher priority. This is not a probability of profit.
+    score = (
+        abs(change_15m) * 2
+        + abs(change_1h)
+        + min(volume_ratio, 5) * 2
+        + bonus
     )
 
-    # Приоритет 1: пробой диапазона 20 свечей.
-    if (
-        last["close"] > prior_high
-        and volume_ratio >= BREAKOUT_VOLUME_RATIO
-    ):
-        return {
-            "type": "breakout_up",
-            "title": "ПРОБОЙ ВВЕРХ",
-            "symbol": symbol,
-            "price": last["close"],
-            "change_15m": change_15m,
-            "change_1h": change_1h,
-            "volume_ratio": volume_ratio,
-            "candle_time": last["time"],
-        }
-
-    if (
-        last["close"] < prior_low
-        and volume_ratio >= BREAKOUT_VOLUME_RATIO
-    ):
-        return {
-            "type": "breakout_down",
-            "title": "ПРОБОЙ ВНИЗ",
-            "symbol": symbol,
-            "price": last["close"],
-            "change_15m": change_15m,
-            "change_1h": change_1h,
-            "volume_ratio": volume_ratio,
-            "candle_time": last["time"],
-        }
-
-    # Приоритет 2: импульс в ту же сторону на 15m и 1h.
-    if (
-        change_15m >= IMPULSE_15M
-        and change_1h >= IMPULSE_1H
-        and volume_ratio >= VOLUME_CONFIRM_RATIO
-    ):
-        return {
-            "type": "pump",
-            "title": "ВОСХОДЯЩИЙ ИМПУЛЬС",
-            "symbol": symbol,
-            "price": last["close"],
-            "change_15m": change_15m,
-            "change_1h": change_1h,
-            "volume_ratio": volume_ratio,
-            "candle_time": last["time"],
-        }
-
-    if (
-        change_15m <= -IMPULSE_15M
-        and change_1h <= -IMPULSE_1H
-        and volume_ratio >= VOLUME_CONFIRM_RATIO
-    ):
-        return {
-            "type": "dump",
-            "title": "НИСХОДЯЩИЙ ИМПУЛЬС",
-            "symbol": symbol,
-            "price": last["close"],
-            "change_15m": change_15m,
-            "change_1h": change_1h,
-            "volume_ratio": volume_ratio,
-            "candle_time": last["time"],
-        }
-
-    # Приоритет 3: движение за час и свеча в обратную сторону.
-    if (
-        change_1h <= -REVERSAL_1H
-        and change_15m >= REVERSAL_15M
-        and volume_ratio >= VOLUME_CONFIRM_RATIO
-    ):
-        return {
-            "type": "reversal_up",
-            "title": "ВОЗМОЖНЫЙ ОТСКОК",
-            "symbol": symbol,
-            "price": last["close"],
-            "change_15m": change_15m,
-            "change_1h": change_1h,
-            "volume_ratio": volume_ratio,
-            "candle_time": last["time"],
-        }
-
-    if (
-        change_1h >= REVERSAL_1H
-        and change_15m <= -REVERSAL_15M
-        and volume_ratio >= VOLUME_CONFIRM_RATIO
-    ):
-        return {
-            "type": "reversal_down",
-            "title": "ВОЗМОЖНЫЙ ОТКАТ",
-            "symbol": symbol,
-            "price": last["close"],
-            "change_15m": change_15m,
-            "change_1h": change_1h,
-            "volume_ratio": volume_ratio,
-            "candle_time": last["time"],
-        }
-
-    return None
+    return {
+        "symbol": symbol,
+        "type": signal_type,
+        "direction": direction,
+        "description": description,
+        "price": close,
+        "change_15m": change_15m,
+        "change_1h": change_1h,
+        "volume_ratio": volume_ratio,
+        "score": score,
+    }
 
 
-def format_signal(signal):
-    return [
-        f"⚠️ {signal['title']}",
-        signal["symbol"],
-        f"Цена закрытия: {fmt_price(signal['price'])}",
-        f"Изменение за 15м: {signal['change_15m']:+.2f}%",
-        f"Изменение за 1ч: {signal['change_1h']:+.2f}%",
-        f"Объём к среднему: {signal['volume_ratio']:.2f}x",
-        "Сигнал по закрытым свечам; проверь график.",
-        "",
-    ]
+# ==================== TELEGRAM ====================
 
+def send_telegram(message):
+    token = os.environ.get("TELEGRAM_BOT_TOKEN")
+    chat_id = os.environ.get("TELEGRAM_CHAT_ID")
+
+    if not token or not chat_id:
+        raise RuntimeError(
+            "Missing TELEGRAM_BOT_TOKEN or TELEGRAM_CHAT_ID secret"
+        )
+
+    url = f"https://api.telegram.org/bot{token}/sendMessage"
+
+    response = session.post(
+        url,
+        json={
+            "chat_id": chat_id,
+            "text": message,
+            "disable_web_page_preview": True,
+        },
+        timeout=REQUEST_TIMEOUT,
+    )
+
+    response.raise_for_status()
+    result = response.json()
+
+    if not result.get("ok"):
+        raise RuntimeError(f"Telegram error: {result}")
+
+
+def format_price(price):
+    if price >= 1000:
+        return f"{price:,.2f}"
+    if price >= 1:
+        return f"{price:.4f}"
+    if price >= 0.01:
+        return f"{price:.5f}"
+    return f"{price:.8f}".rstrip("0")
+
+
+def format_signal(signal, number):
+    return (
+        f"{number}. {signal['symbol']} — {signal['type']}\n"
+        f"   Цена: {format_price(signal['price'])} USDT\n"
+        f"   15м: {signal['change_15m']:+.2f}% | "
+        f"1ч: {signal['change_1h']:+.2f}%\n"
+        f"   Объём: {signal['volume_ratio']:.1f}x от среднего"
+    )
+
+
+# ==================== MAIN ====================
 
 def main():
-    markets = fetch_markets()
+    now = datetime.now(timezone.utc).strftime("%d.%m.%Y %H:%M UTC")
+    snapshot = load_snapshot()
+    sent_signals = snapshot.get("sent_signals", {})
+
+    try:
+        markets = fetch_markets()
+    except Exception as exc:
+        print(f"Could not fetch market list: {exc}")
+        raise
 
     if not markets:
-        raise RuntimeError("BingX returned no markets")
+        print("No markets returned by BingX.")
+        return
 
-    previous_data = load_snapshot()
-    previous = previous_data["markets"]
-    sent_signals = previous_data["sent_signals"]
+    rising = sum(1 for m in markets if m["change_24h"] > 0)
+    falling = sum(1 for m in markets if m["change_24h"] < 0)
 
-    now = datetime.now(timezone.utc).strftime(
-        "%d.%m.%Y %H:%M UTC"
+    print(
+        f"Scanning {len(markets)} markets. "
+        f"24h green: {rising}, red: {falling}."
     )
 
-    rising = sum(1 for market in markets if market["change"] > 0)
-    falling = sum(1 for market in markets if market["change"] < 0)
-    unchanged = len(markets) - rising - falling
-
-    lines = [
-        "BingX Futures — TOP 100 CRYPTO",
-        f"Обновлено: {now}",
-        "Сортировка: оборот за 24 часа",
-        "",
-        "Сводка рынка:",
-        f"Растут: {rising} | Падают: {falling} | Без изменений: {unchanged}",
-        "",
-        "Топ-5 роста за 24ч:",
-    ]
-
-    for market in sorted(
-        markets, key=lambda item: item["change"], reverse=True
-    )[:5]:
-        lines.append(
-            f"{market['symbol']}: {market['change']:+.2f}%"
-        )
-
-    lines.extend(["", "Топ-5 падения за 24ч:"])
-
-    for market in sorted(
-        markets, key=lambda item: item["change"]
-    )[:5]:
-        lines.append(
-            f"{market['symbol']}: {market['change']:+.2f}%"
-        )
-
-    if previous:
-        changes = []
-
-        for market in markets:
-            old = previous.get(market["symbol"])
-            if not old:
-                continue
-
-            old_price = float(old.get("price") or 0)
-            if old_price <= 0:
-                continue
-
-            change = (market["price"] / old_price - 1) * 100
-            changes.append((market, change))
-
-        lines.extend([
-            "",
-            "Изменение цены с прошлого снимка:",
-            "(интервал зависит от времени успешных запусков)",
-            "",
-            "Сильнейший рост:",
-        ])
-
-        for market, change in sorted(
-            changes, key=lambda item: item[1], reverse=True
-        )[:5]:
-            lines.append(f"{market['symbol']}: {change:+.2f}%")
-
-        lines.append("Сильнейшее падение:")
-
-        for market, change in sorted(
-            changes, key=lambda item: item[1]
-        )[:5]:
-            lines.append(f"{market['symbol']}: {change:+.2f}%")
-
-    else:
-        lines.extend([
-            "",
-            "История пока отсутствует.",
-            "Следующий запуск добавит сравнение.",
-        ])
-
-    lines.extend(["", "Рынки по обороту:", ""])
-
-    for rank, market in enumerate(markets, start=1):
-        lines.append(
-            f"{rank}. {market['symbol']} | "
-            f"Цена: {fmt_price(market['price'])} | "
-            f"24ч: {market['change']:+.2f}% | "
-            f"Оборот: ${fmt_volume(market['volume'])}"
-        )
-
-    # Сначала отправляем привычный отчёт TOP 100.
-    send_chunks(lines)
-
-    # Затем ищем события по 15-минутным свечам.
     candidates = []
-    errors = 0
+    current_time = int(time.time())
 
-    for market in markets:
+    for index, market in enumerate(markets, start=1):
+        symbol = market["symbol"]
+
         try:
-            candles = fetch_klines(market["symbol"])
-            signal = detect_signal(market["symbol"], candles)
+            candles = fetch_klines(symbol)
+            signal = detect_signal(symbol, candles)
 
             if signal:
-                key = f"{signal['symbol']}|{signal['type']}"
+                key = f"{symbol}:{signal['type']}"
                 last_sent = int(sent_signals.get(key, 0) or 0)
-                now_ms = int(time.time() * 1000)
 
-                if now_ms - last_sent >= COOLDOWN_MS:
+                if current_time - last_sent >= COOLDOWN_SECONDS:
+                    signal["key"] = key
                     candidates.append(signal)
 
         except Exception as exc:
-            errors += 1
-            print(f"Skipped {market['symbol']}: {exc}")
+            print(f"[{index}/{len(markets)}] {symbol}: {exc}")
 
-        time.sleep(REQUEST_PAUSE)
+        if index < len(markets):
+            time.sleep(REQUEST_PAUSE)
 
-    # Ограничиваем число уведомлений за один цикл.
-    candidates = candidates[:15]
+    # Best candidates first, rather than whichever symbols were scanned first.
+    candidates.sort(key=lambda item: item["score"], reverse=True)
+    selected = candidates[:MAX_SIGNALS]
 
-    if candidates:
-        signal_lines = [
-            "BingX — ОБНАРУЖЕНЫ СИГНАЛЫ",
+    if selected:
+        lines = [
+            "BINGX — РЫНОЧНЫЙ РАДАР",
             f"Время: {now}",
-            "Это фильтры для наблюдения, не команды на вход.",
+            f"Сканировано: {len(markets)} монет из топа по обороту",
+            f"Рынок за 24ч: рост {rising} | падение {falling}",
+            f"Новых сигналов: {len(selected)}",
             "",
         ]
 
-        for signal in candidates:
-            signal_lines.extend(format_signal(signal))
+        for number, signal in enumerate(selected, start=1):
+            lines.append(format_signal(signal, number))
+            lines.append("")
 
-        send_chunks(signal_lines)
+        lines.extend([
+            "Сигналы — повод проверить график, не команда на вход.",
+            "Крипторынок волатилен; возможны ложные пробои.",
+        ])
 
-        now_ms = int(time.time() * 1000)
+        message = "\n".join(lines).strip()
+        send_telegram(message)
 
-        for signal in candidates:
-            key = f"{signal['symbol']}|{signal['type']}"
-            sent_signals[key] = now_ms
+        # Only mark signals as sent after Telegram accepts the message.
+        for signal in selected:
+            sent_signals[signal["key"]] = current_time
 
+        print(f"Telegram report sent: {len(selected)} signals.")
     else:
-        print("No new signals.")
+        print("No new signals. Telegram message not sent.")
 
-    # Сохраняем снимок и время отправленных сигналов.
-    save_snapshot(markets, sent_signals)
+    # Keep the previous snapshot format compatible with this version.
+    market_snapshot = {
+        market["symbol"]: {
+            "price": market["price"],
+            "volume": market["volume"],
+            "change_24h": market["change_24h"],
+        }
+        for market in markets
+    }
 
-    print(
-        f"Report sent; markets={len(markets)}; "
-        f"signals={len(candidates)}; candle_errors={errors}"
-    )
+    save_snapshot(market_snapshot, sent_signals)
 
 
 if __name__ == "__main__":
