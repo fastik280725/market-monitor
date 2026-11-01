@@ -1,155 +1,155 @@
 {
-  "updated_at": "2026-11-01T03:42:23.979719+00:00",
+  "updated_at": "2026-11-01T04:10:01.308097+00:00",
   "markets": {
     "BTC-USDT": {
-      "price": 77742.3,
-      "volume": 285973042.42,
-      "change_24h": 0.57
+      "price": 77722.8,
+      "volume": 281810801.11,
+      "change_24h": 0.79
     },
     "SOL-USDT": {
-      "price": 95.567,
-      "volume": 207063345.56,
-      "change_24h": -1.17
+      "price": 95.443,
+      "volume": 207984471.05,
+      "change_24h": -0.71
     },
     "ETH-USDT": {
-      "price": 2267.53,
-      "volume": 189531681.18,
-      "change_24h": 1.11
+      "price": 2265.76,
+      "volume": 190851300.33,
+      "change_24h": 1.24
     },
     "NCCOGOLD2USD-USDT": {
-      "price": 3890.63,
-      "volume": 135661893.5,
-      "change_24h": -0.12
-    },
-    "ZEC-USDT": {
-      "price": 1246.37,
-      "volume": 48422749.01,
-      "change_24h": -2.15
+      "price": 3890.18,
+      "volume": 134462018.64,
+      "change_24h": -0.02
     },
     "AAVE-USDT": {
-      "price": 138.36,
-      "volume": 47995641.11,
-      "change_24h": 6.3
+      "price": 136.94,
+      "volume": 48281617.27,
+      "change_24h": 5.62
+    },
+    "ZEC-USDT": {
+      "price": 1243.58,
+      "volume": 47853564.5,
+      "change_24h": -1.69
     },
     "AVAX-USDT": {
-      "price": 8.587,
-      "volume": 37894721.99,
-      "change_24h": -0.16
+      "price": 8.639,
+      "volume": 40068153.2,
+      "change_24h": 0.65
     },
     "NEAR-USDT": {
-      "price": 4.415,
-      "volume": 36297207.06,
-      "change_24h": 2.15
+      "price": 4.407,
+      "volume": 37025872.75,
+      "change_24h": 2.58
     },
     "HYPE-USDT": {
-      "price": 88.079,
-      "volume": 35302816.56,
-      "change_24h": -1.89
+      "price": 87.66,
+      "volume": 35240372.71,
+      "change_24h": -1.86
     },
     "1000PEPE-USDT": {
-      "price": 0.0050196,
-      "volume": 28130625.58,
-      "change_24h": 2.29
+      "price": 0.0050064,
+      "volume": 27977758.61,
+      "change_24h": 2.05
     },
     "XRP-USDT": {
-      "price": 1.2487,
-      "volume": 27917298.47,
-      "change_24h": -0.43
+      "price": 1.2483,
+      "volume": 27465313.94,
+      "change_24h": -0.1
     },
     "WLD-USDT": {
-      "price": 0.4001,
-      "volume": 26074528.45,
-      "change_24h": -0.27
+      "price": 0.399,
+      "volume": 26500825.91,
+      "change_24h": -0.2
     },
     "DOGE-USDT": {
-      "price": 0.07547,
-      "volume": 25936106.69,
-      "change_24h": -0.32
-    },
-    "BNB-USDT": {
-      "price": 703.31,
-      "volume": 23233871.89,
-      "change_24h": -0.16
+      "price": 0.07553,
+      "volume": 25900953.25,
+      "change_24h": -0.13
     },
     "INJ-USDT": {
-      "price": 7.39,
-      "volume": 23191357.19,
-      "change_24h": 2.88
+      "price": 7.343,
+      "volume": 23254044.94,
+      "change_24h": 2.99
+    },
+    "BNB-USDT": {
+      "price": 703.37,
+      "volume": 23174648.66,
+      "change_24h": -0.09
     },
     "UNI-USDT": {
-      "price": 7.116,
-      "volume": 22980453.93,
-      "change_24h": 1.47
+      "price": 7.046,
+      "volume": 23114442.47,
+      "change_24h": 1.12
     },
     "LTC-USDT": {
-      "price": 55.92,
-      "volume": 22534672.89,
-      "change_24h": 0.9
+      "price": 55.85,
+      "volume": 22400618.4,
+      "change_24h": 0.98
     },
     "LINK-USDT": {
-      "price": 11.588,
-      "volume": 21184412.14,
-      "change_24h": 0.74
+      "price": 11.513,
+      "volume": 20768128.25,
+      "change_24h": 0.41
     },
     "DYM-USDT": {
-      "price": 0.01574,
-      "volume": 19318724.68,
-      "change_24h": -0.69
-    },
-    "SUI-USDT": {
-      "price": 0.9015,
-      "volume": 17422852.17,
-      "change_24h": -0.08
+      "price": 0.01573,
+      "volume": 19453314.91,
+      "change_24h": -0.76
     },
     "RUNE-USDT": {
-      "price": 0.6243,
-      "volume": 17358291.49,
-      "change_24h": -6.01
+      "price": 0.6236,
+      "volume": 17360454.7,
+      "change_24h": -5.96
     },
     "RENDER-USDT": {
       "price": 1.566,
-      "volume": 16768824.59,
-      "change_24h": -2.0
+      "volume": 16921017.57,
+      "change_24h": -1.45
+    },
+    "SUI-USDT": {
+      "price": 0.9003,
+      "volume": 16700160.5,
+      "change_24h": 0.04
     },
     "TURBO-USDT": {
-      "price": 0.000771,
-      "volume": 16266130.95,
-      "change_24h": -0.84
+      "price": 0.0007712,
+      "volume": 16518532.55,
+      "change_24h": -0.94
     },
     "ONDO-USDT": {
-      "price": 0.4101,
-      "volume": 16006240.87,
-      "change_24h": -0.34
+      "price": 0.4091,
+      "volume": 16005853.9,
+      "change_24h": 0.17
     },
     "OP-USDT": {
-      "price": 0.11324,
-      "volume": 15664576.17,
-      "change_24h": -3.64
-    },
-    "JASMY-USDT": {
-      "price": 0.003727,
-      "volume": 15243556.18,
-      "change_24h": -3.49
-    },
-    "LDO-USDT": {
-      "price": 0.3347,
-      "volume": 15161828.15,
-      "change_24h": -0.12
-    },
-    "TRX-USDT": {
-      "price": 0.30816,
-      "volume": 14675774.6,
-      "change_24h": -5.61
-    },
-    "ARB-USDT": {
-      "price": 0.16441,
-      "volume": 14471366.85,
-      "change_24h": 1.38
+      "price": 0.11422,
+      "volume": 15271382.27,
+      "change_24h": -2.77
     },
     "ADA-USDT": {
-      "price": 0.1922,
-      "volume": 14438864.53,
-      "change_24h": -1.08
+      "price": 0.1924,
+      "volume": 15207639.83,
+      "change_24h": -0.72
+    },
+    "LDO-USDT": {
+      "price": 0.3333,
+      "volume": 15159718.86,
+      "change_24h": -0.18
+    },
+    "JASMY-USDT": {
+      "price": 0.003732,
+      "volume": 14973425.85,
+      "change_24h": -2.75
+    },
+    "TRX-USDT": {
+      "price": 0.3075,
+      "volume": 14725192.48,
+      "change_24h": -6.01
+    },
+    "TIA-USDT": {
+      "price": 0.4763,
+      "volume": 14385030.14,
+      "change_24h": 1.45
     }
   },
   "sent_signals": {
@@ -372,7 +372,7 @@
     "EVAA-USDT:LONG:НАБЛЮДЕНИЕ": 1793426095,
     "BLUR-USDT:SHORT:НАБЛЮДЕНИЕ": 1793424766,
     "DYM-USDT:SHORT:НАБЛЮДЕНИЕ": 1793474538,
-    "TURBO-USDT:SHORT:НАБЛЮДЕНИЕ": 1793480884,
+    "TURBO-USDT:SHORT:НАБЛЮДЕНИЕ": 1793505833,
     "PEOPLE-USDT:LONG:НАБЛЮДЕНИЕ": 1793425060,
     "STRK-USDT:LONG:НАБЛЮДЕНИЕ": 1793425060,
     "ENA-USDT:SHORT:НАБЛЮДЕНИЕ": 1793425060,
@@ -408,31 +408,31 @@
     "GALA-USDT:LONG:НАБЛЮДЕНИЕ": 1793460157,
     "LINK-USDT:LONG:НАБЛЮДЕНИЕ": 1793460157,
     "BTC-USDT:LONG:НАБЛЮДЕНИЕ": 1793474538,
-    "DOGE-USDT:SHORT:НАБЛЮДЕНИЕ": 1793504112,
+    "DOGE-USDT:SHORT:НАБЛЮДЕНИЕ": 1793505833,
     "1000PEPE-USDT:LONG:НАБЛЮДЕНИЕ": 1793504112,
     "AAVE-USDT:SHORT:НАБЛЮДЕНИЕ": 1793480884,
     "UNI-USDT:SHORT:НАБЛЮДЕНИЕ": 1793460870,
     "NCCOXAG2USD-USDT:LONG:СИЛЬНЫЙ": 1793460870,
     "ZEC-USDT:LONG:НАБЛЮДЕНИЕ": 1793474538,
-    "SOL-USDT:SHORT:НАБЛЮДЕНИЕ": 1793504112,
+    "SOL-USDT:SHORT:НАБЛЮДЕНИЕ": 1793505833,
     "NCCOGOLD2USD-USDT:SHORT:НАБЛЮДЕНИЕ": 1793504112,
     "SUI-USDT:SHORT:НАБЛЮДЕНИЕ": 1793473315,
     "KAS-USDT:SHORT:НАБЛЮДЕНИЕ": 1793488790,
     "WLD-USDT:SHORT:НАБЛЮДЕНИЕ": 1793486465,
     "AVAX-USDT:LONG:СИЛЬНЫЙ": 1793462125,
-    "BNB-USDT:SHORT:НАБЛЮДЕНИЕ": 1793495665,
+    "BNB-USDT:SHORT:НАБЛЮДЕНИЕ": 1793505833,
     "1000PEPE-USDT:SHORT:НАБЛЮДЕНИЕ": 1793463164,
-    "AVAX-USDT:SHORT:НАБЛЮДЕНИЕ": 1793492373,
+    "AVAX-USDT:SHORT:НАБЛЮДЕНИЕ": 1793505833,
     "ADA-USDT:LONG:НАБЛЮДЕНИЕ": 1793463164,
-    "BTC-USDT:SHORT:НАБЛЮДЕНИЕ": 1793504112,
+    "BTC-USDT:SHORT:НАБЛЮДЕНИЕ": 1793505833,
     "DOGE-USDT:LONG:СИЛЬНЫЙ": 1793464375,
-    "LTC-USDT:SHORT:НАБЛЮДЕНИЕ": 1793495665,
+    "LTC-USDT:SHORT:НАБЛЮДЕНИЕ": 1793505833,
     "JUP-USDT:SHORT:НАБЛЮДЕНИЕ": 1793480884,
     "APE-USDT:SHORT:НАБЛЮДЕНИЕ": 1793469506,
     "MEW-USDT:SHORT:НАБЛЮДЕНИЕ": 1793471220,
     "ONDO-USDT:SHORT:НАБЛЮДЕНИЕ": 1793495665,
-    "ETH-USDT:SHORT:НАБЛЮДЕНИЕ": 1793473315,
-    "ADA-USDT:SHORT:НАБЛЮДЕНИЕ": 1793504112,
+    "ETH-USDT:SHORT:НАБЛЮДЕНИЕ": 1793505833,
+    "ADA-USDT:SHORT:НАБЛЮДЕНИЕ": 1793505833,
     "LINK-USDT:SHORT:НАБЛЮДЕНИЕ": 1793488790,
     "AAVE-USDT:LONG:НАБЛЮДЕНИЕ": 1793474538,
     "INJ-USDT:SHORT:НАБЛЮДЕНИЕ": 1793474538,
@@ -445,6 +445,6 @@
     "JUP-USDT:LONG:НАБЛЮДЕНИЕ": 1793488790,
     "RUNE-USDT:SHORT:СИЛЬНЫЙ": 1793492373,
     "LDO-USDT:SHORT:НАБЛЮДЕНИЕ": 1793495665,
-    "TRX-USDT:SHORT:НАБЛЮДЕНИЕ": 1793504112
+    "TRX-USDT:SHORT:НАБЛЮДЕНИЕ": 1793505833
   }
 }
