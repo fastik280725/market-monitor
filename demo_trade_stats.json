@@ -1,0 +1,20 @@
+{
+  "first_trade_ts_ms": null,
+  "updated_at_utc": "2026-11-02T09:04:41.732126+00:00",
+  "orders_log": [],
+  "summary": {
+    "since_utc": null,
+    "closed_trades": 0,
+    "wins": 0,
+    "losses": 0,
+    "breakeven": 0,
+    "win_rate_pct": 0.0,
+    "total_realized_pnl_usdt": 0,
+    "gross_profit_usdt": 0,
+    "gross_loss_usdt": 0,
+    "open_positions": 0,
+    "bot_entry_orders_logged": 0,
+    "position_history_rows": 0
+  },
+  "recent_realized": []
+}
