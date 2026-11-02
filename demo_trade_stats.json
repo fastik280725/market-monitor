@@ -1,6 +1,6 @@
 {
   "first_trade_ts_ms": 1793613865443,
-  "updated_at_utc": "2026-11-02T10:04:30.301876+00:00",
+  "updated_at_utc": "2026-11-02T14:22:22.497382+00:00",
   "orders_log": [
     {
       "ts_ms": 1793613865443,
@@ -17,20 +17,46 @@
   ],
   "summary": {
     "since_utc": "2026-11-02T10:04:25.443000+00:00",
-    "closed_trades": 0,
-    "wins": 0,
-    "losses": 0,
+    "closed_trades": 5,
+    "wins": 1,
+    "losses": 4,
     "breakeven": 0,
-    "win_rate_pct": 0.0,
-    "total_realized_pnl_usdt": 0,
-    "gross_profit_usdt": 0,
-    "gross_loss_usdt": 0,
-    "open_positions": 9,
+    "win_rate_pct": 20.0,
+    "total_realized_pnl_usdt": -1011.4037,
+    "gross_profit_usdt": 276.2141,
+    "gross_loss_usdt": -1287.6178,
+    "open_positions": 4,
     "bot_entry_orders_logged": 1,
     "position_history_rows": 0,
-    "trading_fees_usdt": 0,
-    "funding_fees_usdt": 0,
-    "net_pnl_approx_usdt": 0
+    "trading_fees_usdt": -30.4555,
+    "funding_fees_usdt": -0.2414,
+    "net_pnl_approx_usdt": -1042.1006
   },
-  "recent_realized": []
+  "recent_realized": [
+    {
+      "symbol": "NCCOGOLD2USD-USDT",
+      "pnl": 276.214105,
+      "time_utc": "2026-11-02T13:38:02+00:00"
+    },
+    {
+      "symbol": "STX-USDT",
+      "pnl": -174.5646,
+      "time_utc": "2026-11-02T13:34:32+00:00"
+    },
+    {
+      "symbol": "JUP-USDT",
+      "pnl": -70.488832,
+      "time_utc": "2026-11-02T12:35:38+00:00"
+    },
+    {
+      "symbol": "BTW-USDT",
+      "pnl": -349.9931,
+      "time_utc": "2026-11-02T12:26:01+00:00"
+    },
+    {
+      "symbol": "AKE-USDT",
+      "pnl": -692.571294,
+      "time_utc": "2026-11-02T11:29:24+00:00"
+    }
+  ]
 }
