@@ -1,6 +1,6 @@
 {
   "first_trade_ts_ms": 1793613865443,
-  "updated_at_utc": "2026-11-02T23:05:31.462255+00:00",
+  "updated_at_utc": "2026-11-02T23:25:45.868627+00:00",
   "orders_log": [
     {
       "ts_ms": 1793613865443,
@@ -457,6 +457,18 @@
       "notional": 4056.52,
       "leverage": 50,
       "order_id": null
+    },
+    {
+      "ts_ms": 1793661941149,
+      "symbol": "BTW-USDT",
+      "direction": "SHORT",
+      "entry": 0.9676,
+      "stop": 0.995,
+      "target": 0.925,
+      "quantity": 3650.0,
+      "notional": 3531.74,
+      "leverage": 150,
+      "order_id": null
     }
   ],
   "summary": {
@@ -469,8 +481,8 @@
     "total_realized_pnl_usdt": -1628.3511,
     "gross_profit_usdt": 474.8624,
     "gross_loss_usdt": -2103.2135,
-    "open_positions": 34,
-    "bot_entry_orders_logged": 38,
+    "open_positions": 35,
+    "bot_entry_orders_logged": 39,
     "position_history_rows": 0,
     "trading_fees_usdt": -103.0156,
     "funding_fees_usdt": -1.4559,
