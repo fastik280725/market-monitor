@@ -1,6 +1,6 @@
 {
   "first_trade_ts_ms": 1793613865443,
-  "updated_at_utc": "2026-11-02T16:32:29.866775+00:00",
+  "updated_at_utc": "2026-11-02T16:56:58.532160+00:00",
   "orders_log": [
     {
       "ts_ms": 1793613865443,
@@ -125,22 +125,27 @@
   ],
   "summary": {
     "since_utc": "2026-11-02T10:04:25.443000+00:00",
-    "closed_trades": 5,
+    "closed_trades": 6,
     "wins": 1,
-    "losses": 4,
+    "losses": 5,
     "breakeven": 0,
-    "win_rate_pct": 20.0,
-    "total_realized_pnl_usdt": -1011.4037,
+    "win_rate_pct": 16.67,
+    "total_realized_pnl_usdt": -1076.9258,
     "gross_profit_usdt": 276.2141,
-    "gross_loss_usdt": -1287.6178,
+    "gross_loss_usdt": -1353.1399,
     "open_positions": 12,
     "bot_entry_orders_logged": 10,
     "position_history_rows": 0,
-    "trading_fees_usdt": -43.1105,
+    "trading_fees_usdt": -48.2659,
     "funding_fees_usdt": -2.9604,
-    "net_pnl_approx_usdt": -1057.4746
+    "net_pnl_approx_usdt": -1128.152
   },
   "recent_realized": [
+    {
+      "symbol": "QNT-USDT",
+      "pnl": -65.5221,
+      "time_utc": "2026-11-02T16:27:44+00:00"
+    },
     {
       "symbol": "NCCOGOLD2USD-USDT",
       "pnl": 276.214105,
