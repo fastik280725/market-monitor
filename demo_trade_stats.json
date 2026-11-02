@@ -1,6 +1,6 @@
 {
   "first_trade_ts_ms": 1793613865443,
-  "updated_at_utc": "2026-11-02T15:05:51.505840+00:00",
+  "updated_at_utc": "2026-11-02T15:08:51.988480+00:00",
   "orders_log": [
     {
       "ts_ms": 1793613865443,
@@ -37,6 +37,18 @@
       "notional": 4750.0,
       "leverage": 20,
       "order_id": null
+    },
+    {
+      "ts_ms": 1793632127276,
+      "symbol": "EVAA-USDT",
+      "direction": "SHORT",
+      "entry": 1.2913,
+      "stop": 1.41,
+      "target": 1.05,
+      "quantity": 3678.464,
+      "notional": 4750.0,
+      "leverage": 20,
+      "order_id": null
     }
   ],
   "summary": {
@@ -49,8 +61,8 @@
     "total_realized_pnl_usdt": -1011.4037,
     "gross_profit_usdt": 276.2141,
     "gross_loss_usdt": -1287.6178,
-    "open_positions": 6,
-    "bot_entry_orders_logged": 3,
+    "open_positions": 7,
+    "bot_entry_orders_logged": 4,
     "position_history_rows": 0,
     "trading_fees_usdt": -35.1801,
     "funding_fees_usdt": -0.2414,
