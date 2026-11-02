@@ -1,6 +1,6 @@
 {
   "first_trade_ts_ms": 1793613865443,
-  "updated_at_utc": "2026-11-02T15:08:51.988480+00:00",
+  "updated_at_utc": "2026-11-02T15:19:41.357345+00:00",
   "orders_log": [
     {
       "ts_ms": 1793613865443,
@@ -49,6 +49,18 @@
       "notional": 4750.0,
       "leverage": 20,
       "order_id": null
+    },
+    {
+      "ts_ms": 1793632775816,
+      "symbol": "STX-USDT",
+      "direction": "LONG",
+      "entry": 0.327,
+      "stop": 0.315,
+      "target": 0.345,
+      "quantity": 14526.0,
+      "notional": 4750.0,
+      "leverage": 20,
+      "order_id": null
     }
   ],
   "summary": {
@@ -61,12 +73,12 @@
     "total_realized_pnl_usdt": -1011.4037,
     "gross_profit_usdt": 276.2141,
     "gross_loss_usdt": -1287.6178,
-    "open_positions": 7,
-    "bot_entry_orders_logged": 4,
+    "open_positions": 8,
+    "bot_entry_orders_logged": 5,
     "position_history_rows": 0,
-    "trading_fees_usdt": -35.1801,
+    "trading_fees_usdt": -37.5848,
     "funding_fees_usdt": -0.2414,
-    "net_pnl_approx_usdt": -1046.8253
+    "net_pnl_approx_usdt": -1049.23
   },
   "recent_realized": [
     {
