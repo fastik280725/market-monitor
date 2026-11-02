@@ -1,6 +1,6 @@
 {
   "first_trade_ts_ms": 1793613865443,
-  "updated_at_utc": "2026-11-02T14:22:22.497382+00:00",
+  "updated_at_utc": "2026-11-02T14:38:29.302637+00:00",
   "orders_log": [
     {
       "ts_ms": 1793613865443,
@@ -11,6 +11,18 @@
       "target": 126.0,
       "quantity": 36.2,
       "notional": 4751.61,
+      "leverage": 20,
+      "order_id": null
+    },
+    {
+      "ts_ms": 1793630304601,
+      "symbol": "QNT-USDT",
+      "direction": "LONG",
+      "entry": 203.55,
+      "stop": 199.5,
+      "target": 210.5,
+      "quantity": 23.34,
+      "notional": 4750.86,
       "leverage": 20,
       "order_id": null
     }
@@ -25,8 +37,8 @@
     "total_realized_pnl_usdt": -1011.4037,
     "gross_profit_usdt": 276.2141,
     "gross_loss_usdt": -1287.6178,
-    "open_positions": 4,
-    "bot_entry_orders_logged": 1,
+    "open_positions": 5,
+    "bot_entry_orders_logged": 2,
     "position_history_rows": 0,
     "trading_fees_usdt": -30.4555,
     "funding_fees_usdt": -0.2414,
