@@ -1,6 +1,6 @@
 {
   "first_trade_ts_ms": 1793613865443,
-  "updated_at_utc": "2026-11-02T17:50:05.036696+00:00",
+  "updated_at_utc": "2026-11-02T18:04:34.780135+00:00",
   "orders_log": [
     {
       "ts_ms": 1793613865443,
@@ -373,6 +373,66 @@
       "notional": 3251.49,
       "leverage": 50,
       "order_id": null
+    },
+    {
+      "ts_ms": 1793642670149,
+      "symbol": "NCSKINTC2USD-USDT",
+      "direction": "SHORT",
+      "entry": 62.16,
+      "stop": 67.1,
+      "target": 52.28,
+      "quantity": 20.24,
+      "notional": 1258.12,
+      "leverage": 100,
+      "order_id": null
+    },
+    {
+      "ts_ms": 1793642670149,
+      "symbol": "KAS-USDT",
+      "direction": "SHORT",
+      "entry": 0.03199,
+      "stop": 0.0331,
+      "target": 0.02943,
+      "quantity": 90090.0,
+      "notional": 2881.98,
+      "leverage": 50,
+      "order_id": null
+    },
+    {
+      "ts_ms": 1793642670149,
+      "symbol": "EVAA-USDT",
+      "direction": "LONG",
+      "entry": 1.3788,
+      "stop": 1.25,
+      "target": 1.658,
+      "quantity": 776.398,
+      "notional": 1070.5,
+      "leverage": 20,
+      "order_id": null
+    },
+    {
+      "ts_ms": 1793642670149,
+      "symbol": "ARIA-USDT",
+      "direction": "LONG",
+      "entry": 0.12405,
+      "stop": 0.113,
+      "target": 0.148,
+      "quantity": 9049.77,
+      "notional": 1122.62,
+      "leverage": 50,
+      "order_id": null
+    },
+    {
+      "ts_ms": 1793642670149,
+      "symbol": "ESPORTS-USDT",
+      "direction": "LONG",
+      "entry": 0.015276,
+      "stop": 0.0142,
+      "target": 0.018,
+      "quantity": 92936.8,
+      "notional": 1419.7,
+      "leverage": 50,
+      "order_id": null
     }
   ],
   "summary": {
@@ -385,12 +445,12 @@
     "total_realized_pnl_usdt": -1076.9258,
     "gross_profit_usdt": 276.2141,
     "gross_loss_usdt": -1353.1399,
-    "open_positions": 33,
-    "bot_entry_orders_logged": 31,
+    "open_positions": 38,
+    "bot_entry_orders_logged": 36,
     "position_history_rows": 0,
-    "trading_fees_usdt": -69.1114,
+    "trading_fees_usdt": -84.4277,
     "funding_fees_usdt": -2.9604,
-    "net_pnl_approx_usdt": -1148.9976
+    "net_pnl_approx_usdt": -1164.3139
   },
   "recent_realized": [
     {
