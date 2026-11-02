@@ -1,6 +1,6 @@
 {
   "first_trade_ts_ms": 1793613865443,
-  "updated_at_utc": "2026-11-02T16:16:55.967614+00:00",
+  "updated_at_utc": "2026-11-02T16:32:29.866775+00:00",
   "orders_log": [
     {
       "ts_ms": 1793613865443,
@@ -85,6 +85,42 @@
       "notional": 1554.29,
       "leverage": 50,
       "order_id": null
+    },
+    {
+      "ts_ms": 1793637144572,
+      "symbol": "ENA-USDT",
+      "direction": "SHORT",
+      "entry": 0.17157,
+      "stop": 0.1805,
+      "target": 0.154,
+      "quantity": 11198.21,
+      "notional": 1921.28,
+      "leverage": 20,
+      "order_id": null
+    },
+    {
+      "ts_ms": 1793637144572,
+      "symbol": "NCSKSOXL2USD-USDT",
+      "direction": "SHORT",
+      "entry": 75.88,
+      "stop": 81.5,
+      "target": 67.5,
+      "quantity": 17.7936,
+      "notional": 1350.18,
+      "leverage": 150,
+      "order_id": null
+    },
+    {
+      "ts_ms": 1793637144572,
+      "symbol": "NEAR-USDT",
+      "direction": "SHORT",
+      "entry": 3.982,
+      "stop": 4.15,
+      "target": 3.71,
+      "quantity": 595.0,
+      "notional": 2369.29,
+      "leverage": 50,
+      "order_id": null
     }
   ],
   "summary": {
@@ -97,12 +133,12 @@
     "total_realized_pnl_usdt": -1011.4037,
     "gross_profit_usdt": 276.2141,
     "gross_loss_usdt": -1287.6178,
-    "open_positions": 10,
-    "bot_entry_orders_logged": 7,
+    "open_positions": 12,
+    "bot_entry_orders_logged": 10,
     "position_history_rows": 0,
-    "trading_fees_usdt": -42.3355,
+    "trading_fees_usdt": -43.1105,
     "funding_fees_usdt": -2.9604,
-    "net_pnl_approx_usdt": -1056.6995
+    "net_pnl_approx_usdt": -1057.4746
   },
   "recent_realized": [
     {
