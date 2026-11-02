@@ -1,6 +1,6 @@
 {
   "first_trade_ts_ms": 1793613865443,
-  "updated_at_utc": "2026-11-02T16:08:24.798770+00:00",
+  "updated_at_utc": "2026-11-02T16:16:55.967614+00:00",
   "orders_log": [
     {
       "ts_ms": 1793613865443,
@@ -73,6 +73,18 @@
       "notional": 4750.12,
       "leverage": 75,
       "order_id": null
+    },
+    {
+      "ts_ms": 1793636211396,
+      "symbol": "AIN-USDT",
+      "direction": "LONG",
+      "entry": 0.28055,
+      "stop": 0.2625,
+      "target": 0.315,
+      "quantity": 5540.17,
+      "notional": 1554.29,
+      "leverage": 50,
+      "order_id": null
     }
   ],
   "summary": {
@@ -85,12 +97,12 @@
     "total_realized_pnl_usdt": -1011.4037,
     "gross_profit_usdt": 276.2141,
     "gross_loss_usdt": -1287.6178,
-    "open_positions": 9,
-    "bot_entry_orders_logged": 6,
+    "open_positions": 10,
+    "bot_entry_orders_logged": 7,
     "position_history_rows": 0,
     "trading_fees_usdt": -42.3355,
-    "funding_fees_usdt": -0.2414,
-    "net_pnl_approx_usdt": -1053.9806
+    "funding_fees_usdt": -2.9604,
+    "net_pnl_approx_usdt": -1056.6995
   },
   "recent_realized": [
     {
