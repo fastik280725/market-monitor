@@ -2,8 +2,9 @@ name: BingX Market Monitor
 
 on:
   workflow_dispatch:
-  # schedule:
-  #   - cron: "*/30 * * * *"
+  schedule:
+    # Запуск каждые 30 минут
+    - cron: "*/30 * * * *"
 
 permissions:
   contents: write
@@ -23,9 +24,7 @@ jobs:
       GEMINI_API_KEY: ${{ secrets.GEMINI_API_KEY }}
       BINGX_API_KEY: ${{ secrets.BINGX_API_KEY }}
       BINGX_SECRET_KEY: ${{ secrets.BINGX_SECRET_KEY }}
-      # 1 = auto place DEMO orders after TRADE (default on in scanner)
       AUTO_TRADE: "1"
-      # size of each DEMO order (BingX quantity)
       DEMO_NOTIONAL_USDT: "5000"
 
     steps:
