@@ -1,6 +1,6 @@
 {
   "first_trade_ts_ms": 1793613865443,
-  "updated_at_utc": "2026-11-02T20:44:16.350811+00:00",
+  "updated_at_utc": "2026-11-02T21:43:46.667418+00:00",
   "orders_log": [
     {
       "ts_ms": 1793613865443,
@@ -461,22 +461,27 @@
   ],
   "summary": {
     "since_utc": "2026-11-02T10:04:25.443000+00:00",
-    "closed_trades": 11,
+    "closed_trades": 12,
     "wins": 2,
-    "losses": 9,
+    "losses": 10,
     "breakeven": 0,
-    "win_rate_pct": 18.18,
-    "total_realized_pnl_usdt": -1475.5971,
+    "win_rate_pct": 16.67,
+    "total_realized_pnl_usdt": -1628.3511,
     "gross_profit_usdt": 474.8624,
-    "gross_loss_usdt": -1950.4595,
-    "open_positions": 35,
+    "gross_loss_usdt": -2103.2135,
+    "open_positions": 34,
     "bot_entry_orders_logged": 38,
     "position_history_rows": 0,
-    "trading_fees_usdt": -100.7275,
+    "trading_fees_usdt": -103.0156,
     "funding_fees_usdt": -1.4559,
-    "net_pnl_approx_usdt": -1577.7805
+    "net_pnl_approx_usdt": -1732.8226
   },
   "recent_realized": [
+    {
+      "symbol": "NCSKSPCX2USD-USDT",
+      "pnl": -152.753988,
+      "time_utc": "2026-11-02T20:56:10+00:00"
+    },
     {
       "symbol": "ARIA-USDT",
       "pnl": -108.3190899,
