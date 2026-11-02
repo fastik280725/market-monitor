@@ -1,6 +1,6 @@
 {
   "first_trade_ts_ms": 1793613865443,
-  "updated_at_utc": "2026-11-02T18:41:42.272871+00:00",
+  "updated_at_utc": "2026-11-02T19:25:37.153580+00:00",
   "orders_log": [
     {
       "ts_ms": 1793613865443,
@@ -461,22 +461,27 @@
   ],
   "summary": {
     "since_utc": "2026-11-02T10:04:25.443000+00:00",
-    "closed_trades": 7,
+    "closed_trades": 8,
     "wins": 1,
-    "losses": 6,
+    "losses": 7,
     "breakeven": 0,
-    "win_rate_pct": 14.29,
-    "total_realized_pnl_usdt": -1351.5802,
+    "win_rate_pct": 12.5,
+    "total_realized_pnl_usdt": -1457.3393,
     "gross_profit_usdt": 276.2141,
-    "gross_loss_usdt": -1627.7943,
-    "open_positions": 39,
+    "gross_loss_usdt": -1733.5534,
+    "open_positions": 38,
     "bot_entry_orders_logged": 38,
     "position_history_rows": 0,
-    "trading_fees_usdt": -95.2515,
+    "trading_fees_usdt": -95.9044,
     "funding_fees_usdt": -2.9604,
-    "net_pnl_approx_usdt": -1449.792
+    "net_pnl_approx_usdt": -1556.2041
   },
   "recent_realized": [
+    {
+      "symbol": "ESPORTS-USDT",
+      "pnl": -105.75906847,
+      "time_utc": "2026-11-02T18:54:57+00:00"
+    },
     {
       "symbol": "EVAA-USDT",
       "pnl": -274.6543945,
