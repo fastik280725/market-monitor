@@ -79,3 +79,4 @@ jobs:
 
           git commit -m "Update market snapshot and demo trade stats"
           git push
+
