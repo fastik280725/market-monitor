@@ -1,6 +1,6 @@
 {
   "first_trade_ts_ms": 1793613865443,
-  "updated_at_utc": "2026-11-02T16:56:58.532160+00:00",
+  "updated_at_utc": "2026-11-02T16:59:54.945285+00:00",
   "orders_log": [
     {
       "ts_ms": 1793613865443,
@@ -121,6 +121,30 @@
       "notional": 2369.29,
       "leverage": 50,
       "order_id": null
+    },
+    {
+      "ts_ms": 1793638790495,
+      "symbol": "NCSKMU2USD-USDT",
+      "direction": "SHORT",
+      "entry": 862.61,
+      "stop": 892.0,
+      "target": 810.0,
+      "quantity": 3.40252,
+      "notional": 2935.05,
+      "leverage": 150,
+      "order_id": null
+    },
+    {
+      "ts_ms": 1793638790495,
+      "symbol": "NCCO1OILBRENT2USD-USDT",
+      "direction": "SHORT",
+      "entry": 104.92,
+      "stop": 108.5,
+      "target": 99.0,
+      "quantity": 27.933,
+      "notional": 2930.73,
+      "leverage": 150,
+      "order_id": null
     }
   ],
   "summary": {
@@ -133,8 +157,8 @@
     "total_realized_pnl_usdt": -1076.9258,
     "gross_profit_usdt": 276.2141,
     "gross_loss_usdt": -1353.1399,
-    "open_positions": 12,
-    "bot_entry_orders_logged": 10,
+    "open_positions": 14,
+    "bot_entry_orders_logged": 12,
     "position_history_rows": 0,
     "trading_fees_usdt": -48.2659,
     "funding_fees_usdt": -2.9604,
