@@ -1,6 +1,6 @@
 {
   "first_trade_ts_ms": 1793613865443,
-  "updated_at_utc": "2026-11-02T17:43:41.021241+00:00",
+  "updated_at_utc": "2026-11-02T17:48:08.629928+00:00",
   "orders_log": [
     {
       "ts_ms": 1793613865443,
@@ -265,6 +265,114 @@
       "notional": 3966.63,
       "leverage": 50,
       "order_id": null
+    },
+    {
+      "ts_ms": 1793641684083,
+      "symbol": "SOL-USDT",
+      "direction": "SHORT",
+      "entry": 92.538,
+      "stop": 94.95,
+      "target": 87.714,
+      "quantity": 41.46,
+      "notional": 3836.63,
+      "leverage": 100,
+      "order_id": null
+    },
+    {
+      "ts_ms": 1793641684083,
+      "symbol": "SEI-USDT",
+      "direction": "SHORT",
+      "entry": 0.04692,
+      "stop": 0.0481,
+      "target": 0.04426,
+      "quantity": 84746.0,
+      "notional": 3976.28,
+      "leverage": 50,
+      "order_id": null
+    },
+    {
+      "ts_ms": 1793641684083,
+      "symbol": "APE-USDT",
+      "direction": "SHORT",
+      "entry": 0.1082,
+      "stop": 0.1124,
+      "target": 0.0998,
+      "quantity": 23810.0,
+      "notional": 2576.24,
+      "leverage": 50,
+      "order_id": null
+    },
+    {
+      "ts_ms": 1793641684083,
+      "symbol": "TURBO-USDT",
+      "direction": "SHORT",
+      "entry": 0.0007559,
+      "stop": 0.000778,
+      "target": 0.00071,
+      "quantity": 4524887.0,
+      "notional": 3420.36,
+      "leverage": 50,
+      "order_id": null
+    },
+    {
+      "ts_ms": 1793641684083,
+      "symbol": "GALA-USDT",
+      "direction": "SHORT",
+      "entry": 0.001644,
+      "stop": 0.00169,
+      "target": 0.001552,
+      "quantity": 2173913.0,
+      "notional": 3573.91,
+      "leverage": 50,
+      "order_id": null
+    },
+    {
+      "ts_ms": 1793641684083,
+      "symbol": "MEW-USDT",
+      "direction": "SHORT",
+      "entry": 0.0003954,
+      "stop": 0.000409,
+      "target": 0.0003664,
+      "quantity": 7352941.0,
+      "notional": 2907.35,
+      "leverage": 20,
+      "order_id": null
+    },
+    {
+      "ts_ms": 1793641684083,
+      "symbol": "ONDO-USDT",
+      "direction": "SHORT",
+      "entry": 0.3855,
+      "stop": 0.396,
+      "target": 0.3638,
+      "quantity": 9523.81,
+      "notional": 3671.43,
+      "leverage": 50,
+      "order_id": null
+    },
+    {
+      "ts_ms": 1793641684083,
+      "symbol": "1INCH-USDT",
+      "direction": "SHORT",
+      "entry": 0.07948,
+      "stop": 0.0817,
+      "target": 0.07484,
+      "quantity": 45045.0,
+      "notional": 3580.18,
+      "leverage": 50,
+      "order_id": null
+    },
+    {
+      "ts_ms": 1793641684083,
+      "symbol": "LDO-USDT",
+      "direction": "SHORT",
+      "entry": 0.3284,
+      "stop": 0.3385,
+      "target": 0.3082,
+      "quantity": 9901.0,
+      "notional": 3251.49,
+      "leverage": 50,
+      "order_id": null
     }
   ],
   "summary": {
@@ -277,12 +385,12 @@
     "total_realized_pnl_usdt": -1076.9258,
     "gross_profit_usdt": 276.2141,
     "gross_loss_usdt": -1353.1399,
-    "open_positions": 24,
-    "bot_entry_orders_logged": 22,
+    "open_positions": 33,
+    "bot_entry_orders_logged": 31,
     "position_history_rows": 0,
-    "trading_fees_usdt": -51.1908,
+    "trading_fees_usdt": -69.1114,
     "funding_fees_usdt": -2.9604,
-    "net_pnl_approx_usdt": -1131.077
+    "net_pnl_approx_usdt": -1148.9976
   },
   "recent_realized": [
     {
