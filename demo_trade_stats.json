@@ -1,6 +1,6 @@
 {
   "first_trade_ts_ms": 1793613865443,
-  "updated_at_utc": "2026-11-02T15:52:56.518447+00:00",
+  "updated_at_utc": "2026-11-02T16:08:24.798770+00:00",
   "orders_log": [
     {
       "ts_ms": 1793613865443,
@@ -88,9 +88,9 @@
     "open_positions": 9,
     "bot_entry_orders_logged": 6,
     "position_history_rows": 0,
-    "trading_fees_usdt": -39.9604,
+    "trading_fees_usdt": -42.3355,
     "funding_fees_usdt": -0.2414,
-    "net_pnl_approx_usdt": -1051.6055
+    "net_pnl_approx_usdt": -1053.9806
   },
   "recent_realized": [
     {
