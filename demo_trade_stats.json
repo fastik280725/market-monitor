@@ -1,6 +1,6 @@
 {
   "first_trade_ts_ms": 1793613865443,
-  "updated_at_utc": "2026-11-02T19:25:37.153580+00:00",
+  "updated_at_utc": "2026-11-02T19:54:52.529955+00:00",
   "orders_log": [
     {
       "ts_ms": 1793613865443,
@@ -461,22 +461,32 @@
   ],
   "summary": {
     "since_utc": "2026-11-02T10:04:25.443000+00:00",
-    "closed_trades": 8,
-    "wins": 1,
-    "losses": 7,
+    "closed_trades": 10,
+    "wins": 2,
+    "losses": 8,
     "breakeven": 0,
-    "win_rate_pct": 12.5,
-    "total_realized_pnl_usdt": -1457.3393,
-    "gross_profit_usdt": 276.2141,
-    "gross_loss_usdt": -1733.5534,
-    "open_positions": 38,
+    "win_rate_pct": 20.0,
+    "total_realized_pnl_usdt": -1367.278,
+    "gross_profit_usdt": 474.8624,
+    "gross_loss_usdt": -1842.1404,
+    "open_positions": 36,
     "bot_entry_orders_logged": 38,
     "position_history_rows": 0,
-    "trading_fees_usdt": -95.9044,
+    "trading_fees_usdt": -100.218,
     "funding_fees_usdt": -2.9604,
-    "net_pnl_approx_usdt": -1556.2041
+    "net_pnl_approx_usdt": -1470.4564
   },
   "recent_realized": [
+    {
+      "symbol": "ZEC-USDT",
+      "pnl": 198.64828,
+      "time_utc": "2026-11-02T19:40:08+00:00"
+    },
+    {
+      "symbol": "UNI-USDT",
+      "pnl": -108.587,
+      "time_utc": "2026-11-02T19:27:20+00:00"
+    },
     {
       "symbol": "ESPORTS-USDT",
       "pnl": -105.75906847,
