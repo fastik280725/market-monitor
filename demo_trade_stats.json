@@ -1,6 +1,6 @@
 {
   "first_trade_ts_ms": 1793613865443,
-  "updated_at_utc": "2026-11-02T18:04:34.780135+00:00",
+  "updated_at_utc": "2026-11-02T18:11:34.986053+00:00",
   "orders_log": [
     {
       "ts_ms": 1793613865443,
@@ -433,26 +433,55 @@
       "notional": 1419.7,
       "leverage": 50,
       "order_id": null
+    },
+    {
+      "ts_ms": 1793643090417,
+      "symbol": "NCCO1OILWTI2USD-USDT",
+      "direction": "SHORT",
+      "entry": 95.43,
+      "stop": 97.0,
+      "target": 92.0,
+      "quantity": 49.7747,
+      "notional": 4750.0,
+      "leverage": 150,
+      "order_id": null
+    },
+    {
+      "ts_ms": 1793643090417,
+      "symbol": "ZEC-USDT",
+      "direction": "SHORT",
+      "entry": 1185.77,
+      "stop": 1215.0,
+      "target": 1130.0,
+      "quantity": 3.421,
+      "notional": 4056.52,
+      "leverage": 50,
+      "order_id": null
     }
   ],
   "summary": {
     "since_utc": "2026-11-02T10:04:25.443000+00:00",
-    "closed_trades": 6,
+    "closed_trades": 7,
     "wins": 1,
-    "losses": 5,
+    "losses": 6,
     "breakeven": 0,
-    "win_rate_pct": 16.67,
-    "total_realized_pnl_usdt": -1076.9258,
+    "win_rate_pct": 14.29,
+    "total_realized_pnl_usdt": -1351.5802,
     "gross_profit_usdt": 276.2141,
-    "gross_loss_usdt": -1353.1399,
-    "open_positions": 38,
-    "bot_entry_orders_logged": 36,
+    "gross_loss_usdt": -1627.7943,
+    "open_positions": 39,
+    "bot_entry_orders_logged": 38,
     "position_history_rows": 0,
-    "trading_fees_usdt": -84.4277,
+    "trading_fees_usdt": -90.8468,
     "funding_fees_usdt": -2.9604,
-    "net_pnl_approx_usdt": -1164.3139
+    "net_pnl_approx_usdt": -1445.3873
   },
   "recent_realized": [
+    {
+      "symbol": "EVAA-USDT",
+      "pnl": -274.6543945,
+      "time_utc": "2026-11-02T18:05:15+00:00"
+    },
     {
       "symbol": "QNT-USDT",
       "pnl": -65.5221,
