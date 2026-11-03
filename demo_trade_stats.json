@@ -1,6 +1,6 @@
 {
   "first_trade_ts_ms": 1793613865443,
-  "updated_at_utc": "2026-11-03T13:42:57.057223+00:00",
+  "updated_at_utc": "2026-11-03T13:57:07.319635+00:00",
   "orders_log": [
     {
       "ts_ms": 1793613865443,
@@ -469,37 +469,64 @@
       "notional": 3531.74,
       "leverage": 150,
       "order_id": null
+    },
+    {
+      "ts_ms": 1793714215568,
+      "symbol": "AKE-USDT",
+      "direction": "SHORT",
+      "entry": 0.004188,
+      "stop": 0.00465,
+      "target": 0.00325,
+      "quantity": 216450.0,
+      "notional": 906.49,
+      "leverage": 20,
+      "order_id": null
     }
   ],
   "summary": {
     "since_utc": "2026-11-02T10:04:25.443000+00:00",
     "source": "income_realized_pnl",
-    "closed_trades": 23,
+    "closed_trades": 26,
     "wins": 5,
-    "losses": 18,
+    "losses": 21,
     "breakeven": 0,
-    "win_rate_pct": 21.74,
-    "total_realized_pnl_usdt": -1640.9307,
+    "win_rate_pct": 19.23,
+    "total_realized_pnl_usdt": -1984.7981,
     "gross_profit_usdt": 1332.422,
-    "gross_loss_usdt": -2973.3527,
-    "income_ledger_pnl_usdt": -1640.9307,
+    "gross_loss_usdt": -3317.2201,
+    "income_ledger_pnl_usdt": -1984.7981,
     "closed_positions_count": 0,
-    "realized_pnl_records": 23,
+    "realized_pnl_records": 26,
     "position_history_used": false,
-    "open_positions": 21,
-    "bot_entry_orders_logged": 39,
-    "bot_closed_trades": 18,
+    "open_positions": 22,
+    "bot_entry_orders_logged": 40,
+    "bot_closed_trades": 22,
     "bot_wins": 3,
-    "bot_losses": 15,
-    "bot_win_rate_pct": 16.67,
-    "bot_realized_pnl_usdt": -1229.7172,
+    "bot_losses": 19,
+    "bot_win_rate_pct": 13.64,
+    "bot_realized_pnl_usdt": -2266.1559,
     "position_history_rows": 0,
-    "trading_fees_usdt": -125.5386,
+    "trading_fees_usdt": -131.4367,
     "funding_fees_usdt": 14.6754,
-    "net_pnl_approx_usdt": -1751.794,
-    "bot_net_pnl_approx_usdt": -1340.5805
+    "net_pnl_approx_usdt": -2101.5594,
+    "bot_net_pnl_approx_usdt": -2382.9172
   },
   "recent_realized": [
+    {
+      "symbol": "IMX-USDT",
+      "pnl": -109.8305,
+      "time_utc": "2026-11-03T13:34:05+00:00"
+    },
+    {
+      "symbol": "DOGE-USDT",
+      "pnl": -90.81072,
+      "time_utc": "2026-11-03T13:31:59+00:00"
+    },
+    {
+      "symbol": "DYM-USDT",
+      "pnl": -143.226177,
+      "time_utc": "2026-11-03T13:31:55+00:00"
+    },
     {
       "symbol": "GALA-USDT",
       "pnl": -119.020607,
