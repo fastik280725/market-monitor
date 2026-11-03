@@ -1,6 +1,6 @@
 {
   "first_trade_ts_ms": 1793613865443,
-  "updated_at_utc": "2026-11-03T01:03:30.344613+00:00",
+  "updated_at_utc": "2026-11-03T01:09:03.419173+00:00",
   "orders_log": [
     {
       "ts_ms": 1793613865443,
@@ -481,7 +481,7 @@
     "total_realized_pnl_usdt": -1712.1923,
     "gross_profit_usdt": 474.8624,
     "gross_loss_usdt": -2187.0547,
-    "open_positions": 34,
+    "open_positions": 33,
     "bot_entry_orders_logged": 39,
     "position_history_rows": 0,
     "trading_fees_usdt": -107.4266,
