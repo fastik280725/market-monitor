@@ -1,6 +1,6 @@
 {
   "first_trade_ts_ms": 1793613865443,
-  "updated_at_utc": "2026-11-02T23:41:38.905157+00:00",
+  "updated_at_utc": "2026-11-03T01:03:30.344613+00:00",
   "orders_log": [
     {
       "ts_ms": 1793613865443,
@@ -473,22 +473,27 @@
   ],
   "summary": {
     "since_utc": "2026-11-02T10:04:25.443000+00:00",
-    "closed_trades": 12,
+    "closed_trades": 13,
     "wins": 2,
-    "losses": 10,
+    "losses": 11,
     "breakeven": 0,
-    "win_rate_pct": 16.67,
-    "total_realized_pnl_usdt": -1628.3511,
+    "win_rate_pct": 15.38,
+    "total_realized_pnl_usdt": -1712.1923,
     "gross_profit_usdt": 474.8624,
-    "gross_loss_usdt": -2103.2135,
-    "open_positions": 35,
+    "gross_loss_usdt": -2187.0547,
+    "open_positions": 34,
     "bot_entry_orders_logged": 39,
     "position_history_rows": 0,
-    "trading_fees_usdt": -105.0103,
-    "funding_fees_usdt": -1.4559,
-    "net_pnl_approx_usdt": -1734.8173
+    "trading_fees_usdt": -107.4266,
+    "funding_fees_usdt": 5.6429,
+    "net_pnl_approx_usdt": -1813.976
   },
   "recent_realized": [
+    {
+      "symbol": "NCCO1OILWTI2USD-USDT",
+      "pnl": -83.8412679,
+      "time_utc": "2026-11-03T00:43:31+00:00"
+    },
     {
       "symbol": "NCSKSPCX2USD-USDT",
       "pnl": -152.753988,
