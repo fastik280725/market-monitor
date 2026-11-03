@@ -1,6 +1,6 @@
 {
   "first_trade_ts_ms": 1793613865443,
-  "updated_at_utc": "2026-11-03T02:57:40.512563+00:00",
+  "updated_at_utc": "2026-11-03T03:10:48.753415+00:00",
   "orders_log": [
     {
       "ts_ms": 1793613865443,
@@ -473,10 +473,8 @@
   ],
   "summary": {
     "since_utc": "2026-11-02T10:04:25.443000+00:00",
+    "source": "income_realized_pnl",
     "closed_trades": 16,
-    "closed_positions_count": 0,
-    "realized_pnl_records": 16,
-    "position_history_used": false,
     "wins": 4,
     "losses": 12,
     "breakeven": 0,
@@ -484,12 +482,22 @@
     "total_realized_pnl_usdt": -1136.3018,
     "gross_profit_usdt": 1148.2025,
     "gross_loss_usdt": -2284.5043,
+    "income_ledger_pnl_usdt": -1136.3018,
+    "closed_positions_count": 0,
+    "realized_pnl_records": 16,
+    "position_history_used": false,
     "open_positions": 31,
     "bot_entry_orders_logged": 39,
+    "bot_closed_trades": 12,
+    "bot_wins": 3,
+    "bot_losses": 9,
+    "bot_win_rate_pct": 25.0,
+    "bot_realized_pnl_usdt": -540.8687,
     "position_history_rows": 0,
     "trading_fees_usdt": -112.184,
     "funding_fees_usdt": 5.6429,
-    "net_pnl_approx_usdt": -1242.843
+    "net_pnl_approx_usdt": -1242.843,
+    "bot_net_pnl_approx_usdt": -647.4099
   },
   "recent_realized": [
     {
