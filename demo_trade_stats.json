@@ -1,6 +1,6 @@
 {
   "first_trade_ts_ms": 1793613865443,
-  "updated_at_utc": "2026-11-03T19:45:16.534415+00:00",
+  "updated_at_utc": "2026-11-03T21:07:17.468424+00:00",
   "orders_log": [
     {
       "ts_ms": 1793613865443,
@@ -510,32 +510,42 @@
   "summary": {
     "since_utc": "2026-11-02T10:04:25.443000+00:00",
     "source": "income_realized_pnl",
-    "closed_trades": 38,
-    "wins": 16,
+    "closed_trades": 40,
+    "wins": 18,
     "losses": 22,
     "breakeven": 0,
-    "win_rate_pct": 42.11,
-    "total_realized_pnl_usdt": -1392.7538,
-    "gross_profit_usdt": 2050.6602,
+    "win_rate_pct": 45.0,
+    "total_realized_pnl_usdt": -1326.1171,
+    "gross_profit_usdt": 2117.2969,
     "gross_loss_usdt": -3443.414,
-    "income_ledger_pnl_usdt": -1392.7538,
+    "income_ledger_pnl_usdt": -1326.1171,
     "closed_positions_count": 0,
-    "realized_pnl_records": 38,
+    "realized_pnl_records": 40,
     "position_history_used": false,
-    "open_positions": 12,
+    "open_positions": 10,
     "bot_entry_orders_logged": 42,
-    "bot_closed_trades": 34,
-    "bot_wins": 14,
+    "bot_closed_trades": 36,
+    "bot_wins": 16,
     "bot_losses": 20,
-    "bot_win_rate_pct": 41.18,
-    "bot_realized_pnl_usdt": -1550.691,
+    "bot_win_rate_pct": 44.44,
+    "bot_realized_pnl_usdt": -1484.0543,
     "position_history_rows": 0,
-    "trading_fees_usdt": -151.7232,
-    "funding_fees_usdt": 19.1465,
-    "net_pnl_approx_usdt": -1525.3305,
-    "bot_net_pnl_approx_usdt": -1683.2677
+    "trading_fees_usdt": -156.5886,
+    "funding_fees_usdt": 19.6107,
+    "net_pnl_approx_usdt": -1463.095,
+    "bot_net_pnl_approx_usdt": -1621.0322
   },
   "recent_realized": [
+    {
+      "symbol": "NCSKMU2USD-USDT",
+      "pnl": 34.9294355,
+      "time_utc": "2026-11-03T20:02:44+00:00"
+    },
+    {
+      "symbol": "ATOM-USDT",
+      "pnl": 31.70726,
+      "time_utc": "2026-11-03T20:02:39+00:00"
+    },
     {
       "symbol": "AUCTION-USDT",
       "pnl": 32.4218193,
