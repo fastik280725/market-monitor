@@ -1,6 +1,6 @@
 {
   "first_trade_ts_ms": 1793613865443,
-  "updated_at_utc": "2026-11-03T17:43:21.146072+00:00",
+  "updated_at_utc": "2026-11-03T19:45:16.534415+00:00",
   "orders_log": [
     {
       "ts_ms": 1793613865443,
@@ -493,37 +493,104 @@
       "notional": 4749.9,
       "leverage": 50,
       "order_id": null
+    },
+    {
+      "ts_ms": 1793735103965,
+      "symbol": "XMR-USDT",
+      "direction": "LONG",
+      "entry": 637.7,
+      "stop": 619.0,
+      "target": 665.0,
+      "quantity": 5.348,
+      "notional": 3410.42,
+      "leverage": 50,
+      "order_id": null
     }
   ],
   "summary": {
     "since_utc": "2026-11-02T10:04:25.443000+00:00",
     "source": "income_realized_pnl",
-    "closed_trades": 27,
-    "wins": 5,
+    "closed_trades": 38,
+    "wins": 16,
     "losses": 22,
     "breakeven": 0,
-    "win_rate_pct": 18.52,
-    "total_realized_pnl_usdt": -2110.992,
-    "gross_profit_usdt": 1332.422,
+    "win_rate_pct": 42.11,
+    "total_realized_pnl_usdt": -1392.7538,
+    "gross_profit_usdt": 2050.6602,
     "gross_loss_usdt": -3443.414,
-    "income_ledger_pnl_usdt": -2110.992,
+    "income_ledger_pnl_usdt": -1392.7538,
     "closed_positions_count": 0,
-    "realized_pnl_records": 27,
+    "realized_pnl_records": 38,
     "position_history_used": false,
-    "open_positions": 22,
-    "bot_entry_orders_logged": 41,
-    "bot_closed_trades": 24,
-    "bot_wins": 4,
+    "open_positions": 12,
+    "bot_entry_orders_logged": 42,
+    "bot_closed_trades": 34,
+    "bot_wins": 14,
     "bot_losses": 20,
-    "bot_win_rate_pct": 16.67,
-    "bot_realized_pnl_usdt": -2208.1303,
+    "bot_win_rate_pct": 41.18,
+    "bot_realized_pnl_usdt": -1550.691,
     "position_history_rows": 0,
-    "trading_fees_usdt": -133.7318,
+    "trading_fees_usdt": -151.7232,
     "funding_fees_usdt": 19.1465,
-    "net_pnl_approx_usdt": -2225.5773,
-    "bot_net_pnl_approx_usdt": -2322.7156
+    "net_pnl_approx_usdt": -1525.3305,
+    "bot_net_pnl_approx_usdt": -1683.2677
   },
   "recent_realized": [
+    {
+      "symbol": "AUCTION-USDT",
+      "pnl": 32.4218193,
+      "time_utc": "2026-11-03T19:26:07+00:00"
+    },
+    {
+      "symbol": "NCSKINTC2USD-USDT",
+      "pnl": 38.4116,
+      "time_utc": "2026-11-03T19:25:59+00:00"
+    },
+    {
+      "symbol": "BCH-USDT",
+      "pnl": 60.7989,
+      "time_utc": "2026-11-03T19:25:52+00:00"
+    },
+    {
+      "symbol": "TRX-USDT",
+      "pnl": 78.48579,
+      "time_utc": "2026-11-03T19:25:48+00:00"
+    },
+    {
+      "symbol": "NCSKSOXL2USD-USDT",
+      "pnl": 64.464822,
+      "time_utc": "2026-11-03T19:25:44+00:00"
+    },
+    {
+      "symbol": "NEAR-USDT",
+      "pnl": 92.225,
+      "time_utc": "2026-11-03T19:25:41+00:00"
+    },
+    {
+      "symbol": "MEW-USDT",
+      "pnl": 68.6905023,
+      "time_utc": "2026-11-03T19:25:31+00:00"
+    },
+    {
+      "symbol": "KAS-USDT",
+      "pnl": 99.30995,
+      "time_utc": "2026-11-03T19:25:23+00:00"
+    },
+    {
+      "symbol": "EVAA-USDT",
+      "pnl": 73.3096673,
+      "time_utc": "2026-11-03T19:25:16+00:00"
+    },
+    {
+      "symbol": "AKE-USDT",
+      "pnl": 52.286979,
+      "time_utc": "2026-11-03T19:25:12+00:00"
+    },
+    {
+      "symbol": "XMR-USDT",
+      "pnl": 57.83317,
+      "time_utc": "2026-11-03T19:25:10+00:00"
+    },
     {
       "symbol": "1INCH-USDT",
       "pnl": -126.19389,
