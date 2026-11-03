@@ -1,6 +1,6 @@
 {
   "first_trade_ts_ms": 1793613865443,
-  "updated_at_utc": "2026-11-03T07:11:42.648737+00:00",
+  "updated_at_utc": "2026-11-03T13:42:57.057223+00:00",
   "orders_log": [
     {
       "ts_ms": 1793613865443,
@@ -474,32 +474,67 @@
   "summary": {
     "since_utc": "2026-11-02T10:04:25.443000+00:00",
     "source": "income_realized_pnl",
-    "closed_trades": 16,
-    "wins": 4,
-    "losses": 12,
+    "closed_trades": 23,
+    "wins": 5,
+    "losses": 18,
     "breakeven": 0,
-    "win_rate_pct": 25.0,
-    "total_realized_pnl_usdt": -1136.3018,
-    "gross_profit_usdt": 1148.2025,
-    "gross_loss_usdt": -2284.5043,
-    "income_ledger_pnl_usdt": -1136.3018,
+    "win_rate_pct": 21.74,
+    "total_realized_pnl_usdt": -1640.9307,
+    "gross_profit_usdt": 1332.422,
+    "gross_loss_usdt": -2973.3527,
+    "income_ledger_pnl_usdt": -1640.9307,
     "closed_positions_count": 0,
-    "realized_pnl_records": 16,
+    "realized_pnl_records": 23,
     "position_history_used": false,
-    "open_positions": 31,
+    "open_positions": 21,
     "bot_entry_orders_logged": 39,
-    "bot_closed_trades": 12,
+    "bot_closed_trades": 18,
     "bot_wins": 3,
-    "bot_losses": 9,
-    "bot_win_rate_pct": 25.0,
-    "bot_realized_pnl_usdt": -540.8687,
+    "bot_losses": 15,
+    "bot_win_rate_pct": 16.67,
+    "bot_realized_pnl_usdt": -1229.7172,
     "position_history_rows": 0,
-    "trading_fees_usdt": -112.184,
-    "funding_fees_usdt": 7.1412,
-    "net_pnl_approx_usdt": -1241.3446,
-    "bot_net_pnl_approx_usdt": -645.9115
+    "trading_fees_usdt": -125.5386,
+    "funding_fees_usdt": 14.6754,
+    "net_pnl_approx_usdt": -1751.794,
+    "bot_net_pnl_approx_usdt": -1340.5805
   },
   "recent_realized": [
+    {
+      "symbol": "GALA-USDT",
+      "pnl": -119.020607,
+      "time_utc": "2026-11-03T12:45:30+00:00"
+    },
+    {
+      "symbol": "SEI-USDT",
+      "pnl": -117.07109,
+      "time_utc": "2026-11-03T12:40:56+00:00"
+    },
+    {
+      "symbol": "ARB-USDT",
+      "pnl": -103.852026,
+      "time_utc": "2026-11-03T12:16:03+00:00"
+    },
+    {
+      "symbol": "TURBO-USDT",
+      "pnl": -143.8421576,
+      "time_utc": "2026-11-03T11:45:42+00:00"
+    },
+    {
+      "symbol": "FIL-USDT",
+      "pnl": -104.75766,
+      "time_utc": "2026-11-03T11:16:42+00:00"
+    },
+    {
+      "symbol": "PUMP-USDT",
+      "pnl": -100.304918,
+      "time_utc": "2026-11-03T11:08:07+00:00"
+    },
+    {
+      "symbol": "XMR-USDT",
+      "pnl": 184.21946,
+      "time_utc": "2026-11-03T07:33:01+00:00"
+    },
     {
       "symbol": "BTW-USDT",
       "pnl": 487.886132,
