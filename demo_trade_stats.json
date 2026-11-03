@@ -1,6 +1,6 @@
 {
   "first_trade_ts_ms": 1793613865443,
-  "updated_at_utc": "2026-11-03T02:35:47.919971+00:00",
+  "updated_at_utc": "2026-11-03T02:43:29.305891+00:00",
   "orders_log": [
     {
       "ts_ms": 1793613865443,
@@ -473,22 +473,27 @@
   ],
   "summary": {
     "since_utc": "2026-11-02T10:04:25.443000+00:00",
-    "closed_trades": 14,
+    "closed_trades": 15,
     "wins": 3,
-    "losses": 11,
+    "losses": 12,
     "breakeven": 0,
-    "win_rate_pct": 21.43,
-    "total_realized_pnl_usdt": -1526.7383,
+    "win_rate_pct": 20.0,
+    "total_realized_pnl_usdt": -1624.1879,
     "gross_profit_usdt": 660.3164,
-    "gross_loss_usdt": -2187.0547,
-    "open_positions": 32,
+    "gross_loss_usdt": -2284.5043,
+    "open_positions": 31,
     "bot_entry_orders_logged": 39,
     "position_history_rows": 0,
-    "trading_fees_usdt": -109.7069,
+    "trading_fees_usdt": -110.4333,
     "funding_fees_usdt": 5.6429,
-    "net_pnl_approx_usdt": -1630.8024
+    "net_pnl_approx_usdt": -1728.9783
   },
   "recent_realized": [
+    {
+      "symbol": "AIN-USDT",
+      "pnl": -97.449533,
+      "time_utc": "2026-11-03T02:30:53+00:00"
+    },
     {
       "symbol": "AAVE-USDT",
       "pnl": 185.454,
