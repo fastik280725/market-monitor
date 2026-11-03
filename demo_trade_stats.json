@@ -1,6 +1,6 @@
 {
   "first_trade_ts_ms": 1793613865443,
-  "updated_at_utc": "2026-11-03T22:42:35.862284+00:00",
+  "updated_at_utc": "2026-11-03T23:15:01.741418+00:00",
   "orders_log": [
     {
       "ts_ms": 1793613865443,
@@ -505,6 +505,18 @@
       "notional": 3410.42,
       "leverage": 50,
       "order_id": null
+    },
+    {
+      "ts_ms": 1793747685427,
+      "symbol": "FIL-USDT",
+      "direction": "SHORT",
+      "entry": 0.8629,
+      "stop": 0.885,
+      "target": 0.82,
+      "quantity": 4524.9,
+      "notional": 3904.54,
+      "leverage": 75,
+      "order_id": null
     }
   ],
   "summary": {
@@ -522,8 +534,8 @@
     "closed_positions_count": 0,
     "realized_pnl_records": 40,
     "position_history_used": false,
-    "open_positions": 10,
-    "bot_entry_orders_logged": 42,
+    "open_positions": 11,
+    "bot_entry_orders_logged": 43,
     "bot_closed_trades": 36,
     "bot_wins": 16,
     "bot_losses": 20,
