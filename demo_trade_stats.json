@@ -1,6 +1,6 @@
 {
   "first_trade_ts_ms": 1793613865443,
-  "updated_at_utc": "2026-11-03T02:43:29.305891+00:00",
+  "updated_at_utc": "2026-11-03T02:57:40.512563+00:00",
   "orders_log": [
     {
       "ts_ms": 1793613865443,
@@ -473,22 +473,30 @@
   ],
   "summary": {
     "since_utc": "2026-11-02T10:04:25.443000+00:00",
-    "closed_trades": 15,
-    "wins": 3,
+    "closed_trades": 16,
+    "closed_positions_count": 0,
+    "realized_pnl_records": 16,
+    "position_history_used": false,
+    "wins": 4,
     "losses": 12,
     "breakeven": 0,
-    "win_rate_pct": 20.0,
-    "total_realized_pnl_usdt": -1624.1879,
-    "gross_profit_usdt": 660.3164,
+    "win_rate_pct": 25.0,
+    "total_realized_pnl_usdt": -1136.3018,
+    "gross_profit_usdt": 1148.2025,
     "gross_loss_usdt": -2284.5043,
     "open_positions": 31,
     "bot_entry_orders_logged": 39,
     "position_history_rows": 0,
-    "trading_fees_usdt": -110.4333,
+    "trading_fees_usdt": -112.184,
     "funding_fees_usdt": 5.6429,
-    "net_pnl_approx_usdt": -1728.9783
+    "net_pnl_approx_usdt": -1242.843
   },
   "recent_realized": [
+    {
+      "symbol": "BTW-USDT",
+      "pnl": 487.886132,
+      "time_utc": "2026-11-03T02:40:15+00:00"
+    },
     {
       "symbol": "AIN-USDT",
       "pnl": -97.449533,
@@ -564,5 +572,6 @@
       "pnl": -692.571294,
       "time_utc": "2026-11-02T11:29:24+00:00"
     }
-  ]
+  ],
+  "recent_closed_positions": []
 }
