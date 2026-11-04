@@ -1,6 +1,6 @@
 {
   "first_trade_ts_ms": 1793613865443,
-  "updated_at_utc": "2026-11-04T03:47:02.731110+00:00",
+  "updated_at_utc": "2026-11-04T04:04:48.094094+00:00",
   "orders_log": [
     {
       "ts_ms": 1793613865443,
@@ -654,7 +654,7 @@
     "closed_positions_count": 0,
     "realized_pnl_records": 43,
     "position_history_used": false,
-    "open_positions": 18,
+    "open_positions": 15,
     "bot_entry_orders_logged": 53,
     "bot_closed_trades": 39,
     "bot_wins": 17,
