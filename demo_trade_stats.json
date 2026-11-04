@@ -1,6 +1,6 @@
 {
   "first_trade_ts_ms": 1793613865443,
-  "updated_at_utc": "2026-11-04T00:42:30.135490+00:00",
+  "updated_at_utc": "2026-11-04T03:47:02.731110+00:00",
   "orders_log": [
     {
       "ts_ms": 1793613865443,
@@ -642,32 +642,47 @@
   "summary": {
     "since_utc": "2026-11-02T10:04:25.443000+00:00",
     "source": "income_realized_pnl",
-    "closed_trades": 40,
-    "wins": 18,
-    "losses": 22,
+    "closed_trades": 43,
+    "wins": 19,
+    "losses": 24,
     "breakeven": 0,
-    "win_rate_pct": 45.0,
-    "total_realized_pnl_usdt": -1326.1171,
-    "gross_profit_usdt": 2117.2969,
-    "gross_loss_usdt": -3443.414,
-    "income_ledger_pnl_usdt": -1326.1171,
+    "win_rate_pct": 44.19,
+    "total_realized_pnl_usdt": -1268.3635,
+    "gross_profit_usdt": 2282.2854,
+    "gross_loss_usdt": -3550.6489,
+    "income_ledger_pnl_usdt": -1268.3635,
     "closed_positions_count": 0,
-    "realized_pnl_records": 40,
+    "realized_pnl_records": 43,
     "position_history_used": false,
-    "open_positions": 21,
+    "open_positions": 18,
     "bot_entry_orders_logged": 53,
-    "bot_closed_trades": 36,
-    "bot_wins": 16,
-    "bot_losses": 20,
-    "bot_win_rate_pct": 44.44,
-    "bot_realized_pnl_usdt": -1484.0543,
+    "bot_closed_trades": 39,
+    "bot_wins": 17,
+    "bot_losses": 22,
+    "bot_win_rate_pct": 43.59,
+    "bot_realized_pnl_usdt": -1426.3007,
     "position_history_rows": 0,
-    "trading_fees_usdt": -158.5409,
+    "trading_fees_usdt": -182.0761,
     "funding_fees_usdt": 21.1784,
-    "net_pnl_approx_usdt": -1463.4796,
-    "bot_net_pnl_approx_usdt": -1621.4168
+    "net_pnl_approx_usdt": -1429.2612,
+    "bot_net_pnl_approx_usdt": -1587.1984
   },
   "recent_realized": [
+    {
+      "symbol": "DOT-USDT",
+      "pnl": -0.0891,
+      "time_utc": "2026-11-04T03:34:09+00:00"
+    },
+    {
+      "symbol": "NCSKINTC2USD-USDT",
+      "pnl": 164.9885,
+      "time_utc": "2026-11-04T03:02:30+00:00"
+    },
+    {
+      "symbol": "UAI-USDT",
+      "pnl": -107.145749,
+      "time_utc": "2026-11-04T01:02:34+00:00"
+    },
     {
       "symbol": "NCSKMU2USD-USDT",
       "pnl": 34.9294355,
