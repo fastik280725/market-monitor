@@ -1,6 +1,6 @@
 {
   "first_trade_ts_ms": 1793613865443,
-  "updated_at_utc": "2026-11-04T04:04:48.094094+00:00",
+  "updated_at_utc": "2026-11-04T04:30:20.661261+00:00",
   "orders_log": [
     {
       "ts_ms": 1793613865443,
@@ -637,37 +637,119 @@
       "notional": 4749.9,
       "leverage": 100,
       "order_id": null
+    },
+    {
+      "ts_ms": 1793766606366,
+      "symbol": "RUNE-USDT",
+      "direction": "LONG",
+      "entry": 0.621,
+      "stop": 0.605,
+      "target": 0.645,
+      "quantity": 6250.0,
+      "notional": 3881.25,
+      "leverage": 50,
+      "order_id": null
     }
   ],
   "summary": {
     "since_utc": "2026-11-02T10:04:25.443000+00:00",
     "source": "income_realized_pnl",
-    "closed_trades": 43,
-    "wins": 19,
-    "losses": 24,
+    "closed_trades": 57,
+    "wins": 29,
+    "losses": 28,
     "breakeven": 0,
-    "win_rate_pct": 44.19,
-    "total_realized_pnl_usdt": -1268.3635,
-    "gross_profit_usdt": 2282.2854,
-    "gross_loss_usdt": -3550.6489,
-    "income_ledger_pnl_usdt": -1268.3635,
+    "win_rate_pct": 50.88,
+    "total_realized_pnl_usdt": -981.4004,
+    "gross_profit_usdt": 2601.7427,
+    "gross_loss_usdt": -3583.1431,
+    "income_ledger_pnl_usdt": -981.4004,
     "closed_positions_count": 0,
-    "realized_pnl_records": 43,
+    "realized_pnl_records": 57,
     "position_history_used": false,
-    "open_positions": 15,
-    "bot_entry_orders_logged": 53,
-    "bot_closed_trades": 39,
-    "bot_wins": 17,
-    "bot_losses": 22,
-    "bot_win_rate_pct": 43.59,
-    "bot_realized_pnl_usdt": -1426.3007,
+    "open_positions": 4,
+    "bot_entry_orders_logged": 54,
+    "bot_closed_trades": 53,
+    "bot_wins": 27,
+    "bot_losses": 26,
+    "bot_win_rate_pct": 50.94,
+    "bot_realized_pnl_usdt": -1139.3376,
     "position_history_rows": 0,
-    "trading_fees_usdt": -182.0761,
-    "funding_fees_usdt": 21.1784,
-    "net_pnl_approx_usdt": -1429.2612,
-    "bot_net_pnl_approx_usdt": -1587.1984
+    "trading_fees_usdt": -206.4897,
+    "funding_fees_usdt": 21.6336,
+    "net_pnl_approx_usdt": -1166.2565,
+    "bot_net_pnl_approx_usdt": -1324.1937
   },
   "recent_realized": [
+    {
+      "symbol": "NCCO1OILBRENT2USD-USDT",
+      "pnl": 41.541281,
+      "time_utc": "2026-11-04T04:16:06+00:00"
+    },
+    {
+      "symbol": "10000SATS-USDT",
+      "pnl": 40.9294814,
+      "time_utc": "2026-11-04T04:16:04+00:00"
+    },
+    {
+      "symbol": "FIL-USDT",
+      "pnl": 76.40195,
+      "time_utc": "2026-11-04T04:16:00+00:00"
+    },
+    {
+      "symbol": "NCSKSOXL2USD-USDT",
+      "pnl": 111.518823,
+      "time_utc": "2026-11-04T04:15:57+00:00"
+    },
+    {
+      "symbol": "NCSKGOOGL2USD-USDT",
+      "pnl": 37.92497,
+      "time_utc": "2026-11-04T04:15:55+00:00"
+    },
+    {
+      "symbol": "ORDI-USDT",
+      "pnl": -5.11659,
+      "time_utc": "2026-11-04T04:11:39+00:00"
+    },
+    {
+      "symbol": "DYDX-USDT",
+      "pnl": -9.90795,
+      "time_utc": "2026-11-04T04:11:39+00:00"
+    },
+    {
+      "symbol": "ENA-USDT",
+      "pnl": 1.8106998,
+      "time_utc": "2026-11-04T04:11:27+00:00"
+    },
+    {
+      "symbol": "LINK-USDT",
+      "pnl": 0.9416,
+      "time_utc": "2026-11-04T04:11:27+00:00"
+    },
+    {
+      "symbol": "SOL-USDT",
+      "pnl": -15.29946,
+      "time_utc": "2026-11-04T04:11:12+00:00"
+    },
+    {
+      "symbol": "ADA-USDT",
+      "pnl": 2.5,
+      "time_utc": "2026-11-04T04:09:14+00:00"
+    },
+    {
+      "symbol": "LDO-USDT",
+      "pnl": 3.4891,
+      "time_utc": "2026-11-04T04:03:48+00:00"
+    },
+    {
+      "symbol": "ONDO-USDT",
+      "pnl": 2.399394,
+      "time_utc": "2026-11-04T04:01:41+00:00"
+    },
+    {
+      "symbol": "WIF-USDT",
+      "pnl": -2.170223,
+      "time_utc": "2026-11-04T03:59:11+00:00"
+    },
     {
       "symbol": "DOT-USDT",
       "pnl": -0.0891,
@@ -847,41 +929,6 @@
       "symbol": "ESPORTS-USDT",
       "pnl": -105.75906847,
       "time_utc": "2026-11-02T18:54:57+00:00"
-    },
-    {
-      "symbol": "EVAA-USDT",
-      "pnl": -274.6543945,
-      "time_utc": "2026-11-02T18:05:15+00:00"
-    },
-    {
-      "symbol": "QNT-USDT",
-      "pnl": -65.5221,
-      "time_utc": "2026-11-02T16:27:44+00:00"
-    },
-    {
-      "symbol": "NCCOGOLD2USD-USDT",
-      "pnl": 276.214105,
-      "time_utc": "2026-11-02T13:38:02+00:00"
-    },
-    {
-      "symbol": "STX-USDT",
-      "pnl": -174.5646,
-      "time_utc": "2026-11-02T13:34:32+00:00"
-    },
-    {
-      "symbol": "JUP-USDT",
-      "pnl": -70.488832,
-      "time_utc": "2026-11-02T12:35:38+00:00"
-    },
-    {
-      "symbol": "BTW-USDT",
-      "pnl": -349.9931,
-      "time_utc": "2026-11-02T12:26:01+00:00"
-    },
-    {
-      "symbol": "AKE-USDT",
-      "pnl": -692.571294,
-      "time_utc": "2026-11-02T11:29:24+00:00"
     }
   ],
   "recent_closed_positions": []
