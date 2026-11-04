@@ -1,6 +1,6 @@
 {
   "first_trade_ts_ms": 1793613865443,
-  "updated_at_utc": "2026-11-03T23:51:15.142224+00:00",
+  "updated_at_utc": "2026-11-04T00:42:30.135490+00:00",
   "orders_log": [
     {
       "ts_ms": 1793613865443,
@@ -517,6 +517,126 @@
       "notional": 3904.54,
       "leverage": 75,
       "order_id": null
+    },
+    {
+      "ts_ms": 1793752933892,
+      "symbol": "LINK-USDT",
+      "direction": "SHORT",
+      "entry": 10.894,
+      "stop": 11.19,
+      "target": 10.38,
+      "quantity": 337.8,
+      "notional": 3679.99,
+      "leverage": 75,
+      "order_id": null
+    },
+    {
+      "ts_ms": 1793752933892,
+      "symbol": "UAI-USDT",
+      "direction": "SHORT",
+      "entry": 0.0958,
+      "stop": 0.101,
+      "target": 0.087,
+      "quantity": 19230.77,
+      "notional": 1842.31,
+      "leverage": 20,
+      "order_id": null
+    },
+    {
+      "ts_ms": 1793752933892,
+      "symbol": "ADA-USDT",
+      "direction": "SHORT",
+      "entry": 0.1875,
+      "stop": 0.1915,
+      "target": 0.181,
+      "quantity": 25000.0,
+      "notional": 4687.5,
+      "leverage": 75,
+      "order_id": null
+    },
+    {
+      "ts_ms": 1793752933892,
+      "symbol": "DYDX-USDT",
+      "direction": "SHORT",
+      "entry": 0.1016,
+      "stop": 0.1045,
+      "target": 0.097,
+      "quantity": 34482.8,
+      "notional": 3503.45,
+      "leverage": 50,
+      "order_id": null
+    },
+    {
+      "ts_ms": 1793752933892,
+      "symbol": "COMP-USDT",
+      "direction": "SHORT",
+      "entry": 19.7,
+      "stop": 20.2,
+      "target": 18.9,
+      "quantity": 200.0,
+      "notional": 3940.0,
+      "leverage": 50,
+      "order_id": null
+    },
+    {
+      "ts_ms": 1793752933892,
+      "symbol": "WIF-USDT",
+      "direction": "SHORT",
+      "entry": 0.1702,
+      "stop": 0.1735,
+      "target": 0.165,
+      "quantity": 27908.34,
+      "notional": 4750.0,
+      "leverage": 50,
+      "order_id": null
+    },
+    {
+      "ts_ms": 1793752933892,
+      "symbol": "NCSKSOXL2USD-USDT",
+      "direction": "SHORT",
+      "entry": 72.05,
+      "stop": 76.5,
+      "target": 64.8,
+      "quantity": 22.4719,
+      "notional": 1619.1,
+      "leverage": 150,
+      "order_id": null
+    },
+    {
+      "ts_ms": 1793752933892,
+      "symbol": "DOT-USDT",
+      "direction": "SHORT",
+      "entry": 0.9276,
+      "stop": 0.945,
+      "target": 0.898,
+      "quantity": 5120.7,
+      "notional": 4749.96,
+      "leverage": 75,
+      "order_id": null
+    },
+    {
+      "ts_ms": 1793752933892,
+      "symbol": "NCSKINTC2USD-USDT",
+      "direction": "SHORT",
+      "entry": 60.11,
+      "stop": 61.8,
+      "target": 57.3,
+      "quantity": 59.17,
+      "notional": 3556.71,
+      "leverage": 100,
+      "order_id": null
+    },
+    {
+      "ts_ms": 1793752933892,
+      "symbol": "NCSKGOOGL2USD-USDT",
+      "direction": "SHORT",
+      "entry": 278.13,
+      "stop": 281.2,
+      "target": 273.5,
+      "quantity": 17.078,
+      "notional": 4749.9,
+      "leverage": 100,
+      "order_id": null
     }
   ],
   "summary": {
@@ -534,8 +654,8 @@
     "closed_positions_count": 0,
     "realized_pnl_records": 40,
     "position_history_used": false,
-    "open_positions": 11,
-    "bot_entry_orders_logged": 43,
+    "open_positions": 21,
+    "bot_entry_orders_logged": 53,
     "bot_closed_trades": 36,
     "bot_wins": 16,
     "bot_losses": 20,
@@ -543,9 +663,9 @@
     "bot_realized_pnl_usdt": -1484.0543,
     "position_history_rows": 0,
     "trading_fees_usdt": -158.5409,
-    "funding_fees_usdt": 19.6107,
-    "net_pnl_approx_usdt": -1465.0473,
-    "bot_net_pnl_approx_usdt": -1622.9845
+    "funding_fees_usdt": 21.1784,
+    "net_pnl_approx_usdt": -1463.4796,
+    "bot_net_pnl_approx_usdt": -1621.4168
   },
   "recent_realized": [
     {
